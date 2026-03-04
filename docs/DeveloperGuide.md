@@ -262,48 +262,94 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+**Primary target user**: _Student financial advisor_ who meets many people and needs to capture or retrieve contact info quickly.
+
+* maintains a growing network
+* often multitasking
+* prefers fast keyboard commands
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
+* wants safe deletion to avoid accidental loss
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: AddressBook helps student financial advisors maintain and retrieve contacts quickly via keyboard-first commands, so they can follow up and manage relationships without relying on messy notes or slow UI workflows.
 
+---
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                   | I want to …​                          | So that I can…​                                      |
+| -------- |---------------------------| ------------------------------------- | ---------------------------------------------------- |
+| `* * *`  | student financial advisor | add a contact                         | capture someone immediately after meeting them       |
+| `* * *`  | student financial advisor | list all contacts                     | browse my network quickly                            |
+| `* * *`  | student financial advisor | view a contact by index               | open full details quickly after listing/searching    |
+| `* * *`  | student financial advisor | find contacts by name keyword         | retrieve people instantly                            |
+| `* * *`  | student financial advisor | edit a contact’s details              | keep details accurate and fix typos quickly          |
+| `* * *`  | student financial advisor | delete a contact with confirmation    | remove outdated entries safely                       |
+| `* * *`  | student financial advisor | add a tag to a contact                | categorise contacts quickly                          |
+| `* * *`  | student financial advisor | remove a tag from a contact           | keep tags clean and updated                          |
+| `* *`    | student financial advisor | find contacts by notes keyword        | locate someone by remembered context                 |
+| `* *`    | student financial advisor | list contacts filtered by tag         | target a group easily                                |
+| `* *`    | student financial advisor | sort contacts by name                 | scan large lists more easily                         |
+| `* *`    | user                      | see usage instructions/help           | refer to commands when I forget how to use the app   |
+| `*`      | student financial advisor | log interactions with a contact       | track engagement history                             |
+| `*`      | student financial advisor | set follow-up dates / reminders       | avoid forgetting to check in                         |
 
 *{More to be added}*
+
+---
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Add a contact with tags**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a contact with required details (e.g., name, phone).
+2.  AddressBook requests any missing required fields (if any).
+3.  User provides missing fields (if any).
+4.  AddressBook creates the contact and shows a success message.
+5.  User requests to add one or more tags to the newly added contact.
+6.  AddressBook adds the tags and shows the updated contact.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. User input is invalid (e.g., invalid phone/email format).
+
+    * 2a1. AddressBook shows an error message.
+
+      Use case resumes at step 1.
+
+* 4a. A duplicate contact is detected (same name and phone number).
+
+    * 4a1. AddressBook shows an error message.
+
+      Use case ends.
+
+---
+
+**Use case: Find a contact by name keyword, then edit the contact**
+
+**MSS**
+
+1.  User requests to find contacts using a name keyword.
+2.  AddressBook shows a list of matching contacts.
+3.  User requests to view a specific contact from the list by index.
+4.  AddressBook shows the full contact details.
+5.  User requests to edit one or more fields of the contact.
+6.  AddressBook updates the contact and shows the updated contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No contacts match the keyword.
 
   Use case ends.
 
@@ -313,21 +359,116 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+* 5a. The edited value is invalid (e.g., invalid email).
+
+    * 5a1. AddressBook shows an error message.
+
+      Use case resumes at step 4.
+
+---
+
+**Use case: Delete a contact**
+
+**MSS**
+
+1.  User requests to list contacts.
+2.  AddressBook shows a list of contacts.
+3.  User requests to delete a specific contact in the list by index.
+4.  AddressBook asks for confirmation to delete the contact.
+5.  User confirms the deletion.
+6.  AddressBook deletes the contact and shows a success message.
+
+    Use case ends.
+
+**Extensions**
+* 1a. User already knows the index of the contact to delete.
+
+  Use case resumes at step 3.
+
+* 2a. The contact list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+* 5a. User cancels the deletion.
+
+  Use case ends.
+
+---
+
+**Use case: Remove a tag from a contact**
+
+**MSS**
+
+1.  User requests to find contacts using a name keyword.
+2.  AddressBook shows a list of matching contacts.
+3.  User requests to view a specific contact from the list by index.
+4.  AddressBook shows the full contact details including tags.
+5.  User requests to remove a tag from the contact.
+6.  AddressBook removes the tag and shows the updated contact.
+
+    Use case ends.
+
+**Extensions**
+* 1a. User already knows the index of the contact to untag.
+
+  1a1. User requests to remove a tag from the contact by index.
+  1a2. AddressBook removes the tag and shows the updated contact.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+* 5a. The tag does not exist on the contact.
+
+    * 5a1. AddressBook shows an error message.
+
+      Use case resumes at step 4.
+
 *{More to be added}*
+
+---
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1.  Should work on any _mainstream OS_ as long as it has Java `17` installed.
+2.  Should work without requiring an installer (i.e., the product can be run directly from the delivered JAR/ZIP).
+3.  Should be packaged as a single JAR file. If this is not possible, the deliverable should be a single ZIP file containing the JAR and any required files.
+4.  Should store data locally in a human-editable text file, and the level of support for manual edits should be at least that of AB3.
+5.  Should not use a DBMS for data storage.
+6.  Should not depend on a remote server owned/maintained by the project team.
+7.  Should be primarily object-oriented in design and implementation.
+8.  Should target single-user usage (i.e., the data is intended for one user and is not designed for concurrent access by multiple users).
+9.  Should be optimized for users who can type fast and prefer typing, such that most tasks can be completed faster via CLI commands than via mouse/GUI interactions.
+10. Should be able to hold up to 1000 contacts without noticeable sluggishness in performance for typical usage.
+11. The GUI should work well for screen resolutions `1920x1080` and higher at `100%` and `125%` scaling, and remain usable for `1280x720` and higher at `150%` scaling.
+12. The deliverable file size should not exceed `100MB` for the product (JAR/ZIP).
+13. The Developer Guide (DG) and User Guide (UG) should be PDF-friendly (e.g., no expandable panels, embedded videos, or animated GIFs).
+14. The product should not require installation of any third-party software by the user. Any third-party libraries/services used should be free/open-source (or approved services), permissively licensed, and pre-approved by the teaching team.gh to allow new commands/features to be added without major rewrites.
 
 *{More to be added}*
+
+---
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **AddressBook**: The system that stores and manages contacts
+* **Contact**: An entry representing a person, containing fields such as name, phone number, and email
+* **Index**: The number shown in a listed result that identifies a specific contact in that displayed list
+* **Keyword**: A search term used to find matching contacts (e.g., partial name match)
+* **Tag**: A short label attached to a contact for categorisation
+* **Confirmation**: A user action required to proceed with a destructive operation (e.g., delete)
+* **Command**: A text instruction typed by the user to perform an operation in AddressBook
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
