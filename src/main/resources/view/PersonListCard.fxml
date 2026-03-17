@@ -2,35 +2,46 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+<HBox id="cardPane" fx:id="cardPane" spacing="20" minHeight="125" alignment="CENTER_LEFT"
+      styleClass="person-card"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <padding>
+    <Insets top="24" right="28" bottom="24" left="52" />
+  </padding>
+
+  <VBox alignment="CENTER_LEFT" spacing="20" prefWidth="280" minWidth="280">
+    <padding>
+      <Insets top="6" bottom="6" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="6">
+      <Label fx:id="id" styleClass="person-index-label">
+        <minWidth>
+          <Region fx:constant="USE_PREF_SIZE" />
+        </minWidth>
+      </Label>
+      <Label fx:id="name" text="Name" styleClass="person-name-label" />
+    </HBox>
+
+    <VBox alignment="CENTER_LEFT" spacing="12">
+      <Label fx:id="phone" text="Phone" styleClass="person-detail-label" />
+      <HBox alignment="CENTER_LEFT" spacing="0">
+        <Label text="Email: " styleClass="person-detail-label" />
+        <Label fx:id="email" text="email@example.com" styleClass="person-email-label" />
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
     </VBox>
-  </GridPane>
+  </VBox>
+
+  <VBox alignment="CENTER_LEFT" spacing="8" prefWidth="420" minWidth="420">
+    <Label fx:id="address" text="Address" styleClass="person-address-label" wrapText="true" />
+  </VBox>
+
+  <Region HBox.hgrow="ALWAYS" />
+
+  <FlowPane fx:id="tags" alignment="TOP_RIGHT" hgap="10" vgap="10" prefWrapLength="220" prefWidth="220" />
 </HBox>
