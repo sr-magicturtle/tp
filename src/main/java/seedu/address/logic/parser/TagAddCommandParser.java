@@ -53,7 +53,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
         String[] preambleParts = preamble.split("\\s+");
         for (String part : preambleParts) {
-            if (part.matches(".+/")) { // looks like an unknown prefix
+            if (part.matches("\\S+/\\S*")) { // token contains a prefix-like pattern e.g. l/123 or l/
                 throw new ParseException("Invalid prefix detected: " + part);
             }
         }
