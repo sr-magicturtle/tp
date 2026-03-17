@@ -12,18 +12,20 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Displays only the contact identified by the specified index in the currently displayed person list.
- * <p>
- * The command filters the current list such that only the selected person remains visible in the UI.
+ * Represents a command that displays the contact identified by the specified index
+ * in the currently displayed person list.
+ *
+ * The command filters the current list such that only the selected person remains visible.
  * The index refers to the index shown in the most recent person listing.
  */
 public class ViewCommand extends Command {
 
-    /** Command word used to trigger this command. */
+    /** Command word used to execute this command. */
     public static final String COMMAND_WORD = "view";
 
     /**
      * Usage instructions for the view command.
+     *
      * Indicates the required parameters and an example of how the command should be used.
      */
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -31,30 +33,30 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    /** Message shown to the user when the view command executes successfully. */
+    /** Success message displayed when the command executes successfully. */
     public static final String MESSAGE_SUCCESS = "Viewing Person: %1$s";
 
-    /** The index of the person to be viewed in the filtered person list. */
+    /** Index of the person to be viewed in the filtered person list. */
     private final Index targetIndex;
 
     /**
-     * Creates a {@code ViewCommand} to display the person at the specified index.
+     * Creates a ViewCommand to display the person at the specified index.
      *
-     * @param targetIndex The index of the person in the currently displayed list.
+     * @param targetIndex Index of the person in the currently displayed list.
      */
     public ViewCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     /**
-     * Executes the view command.
-     * <p>
-     * The person corresponding to the given index is retrieved from the currently filtered list.
-     * The model is then updated to display only that person by applying a predicate that matches the selected person.
+     * Executes the command to display the selected person.
      *
-     * @param model The model which contains the address book data.
-     * @return A {@code CommandResult} containing the success message and formatted person details.
-     * @throws CommandException If the provided index is invalid or out of bounds in the current list.
+     * Retrieves the person corresponding to the given index from the filtered list
+     * and updates the model to display only that person.
+     *
+     * @param model Model containing the address book data.
+     * @return CommandResult containing the success message and formatted person details.
+     * @throws CommandException If the index is invalid or out of bounds.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
