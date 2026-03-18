@@ -1,0 +1,72 @@
+.app-root {
+    -fx-background-color: #f6f7fb;
+    -fx-font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Menu bar */
+.menu-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e6e8f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Existing class name used across layout; soften it */
+.pane-with-border {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #e6e8f0;
+    -fx-border-width: 1;
+}
+
+/* “Card” subtle shadow */
+.command-card, .result-card {
+    -fx-effect: dropshadow(gaussian, rgba(20, 24, 40, 0.08), 14, 0.15, 0, 3);
+}
+
+/* Command input container */
+.command-box {
+    -fx-background-color: transparent;
+}
+
+/* Command input */
+.command-input {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #cfd6ff;
+    -fx-border-width: 1;
+    -fx-padding: 10 12 10 12;
+    -fx-font-size: 13px;
+}
+
+.command-input:focused {
+    -fx-border-color: #6c63ff;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.22), 16, 0.25, 0, 2);
+}
+
+/* Result display container */
+.result-box {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #e6e8f0;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(20, 24, 40, 0.08), 14, 0.15, 0, 3);
+}
+
+/* Result text area (message style) */
+.result-display {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-text-fill: #1f2a37;
+    -fx-font-size: 13px;
+    -fx-padding: 10 10 10 10;
+}
+
+/* Optional: tone down scrollbars inside result display */
+.result-display .scroll-pane,
+.result-display .viewport {
+    -fx-background-color: transparent;
+}
