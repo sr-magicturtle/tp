@@ -156,6 +156,34 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+### Adding a tag : `tagadd`
+
+Adds a tag to an existing person in the address book.
+
+Format: `tagadd INDEX [t/TAG]`
+
+* Adds a tag to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Creates the tag if it does not already exist.
+* If the tag exists, the addition of the tag will not be allowed.
+* Only 1 tag can be added at a time.
+
+Examples:
+* `tagadd 1 t/friend` adds the tag `friend` to the 1st person in the address book.
+
+### Removing a tag : `tagrm`
+
+Removes a tag from an existing person in the address book.
+
+Format: `tagrm INDEX [t/TAG]`
+
+* Removes a tag from the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Removes the tag if it exists for the person.
+* If the tag does not exist, the deletion of the tag will not be allowed.
+* Only 1 tag can be removed at a time.
+
+Examples:
+* `tagrm 1 t/friend` removes the tag `friend` from the 1st person in the address book.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -213,3 +241,5 @@ Action | Format, Examples
 **List** | `list`
 **Help** | `help`
 **View** | `view INDEX`<br> e.g., `view 3`
+**Tag Add** | `tagadd INDEX [t/TAG]`<br> e.g., `tagadd 1 t/friend`
+**Tag Remove** | `tagrm INDEX [t/TAG]`<br> e.g., `tagrm 1 t/friend`
