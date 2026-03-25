@@ -30,7 +30,7 @@ public class Tag {
      */
     public static boolean isValidTagName(String test) {
         return test.matches(VALIDATION_REGEX);
-    } //reminder to edit okkkk
+    }
 
     @Override
     public boolean equals(Object other) {
