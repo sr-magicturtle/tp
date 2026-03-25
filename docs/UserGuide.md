@@ -27,7 +27,7 @@ FAM is optimized for use via a **Command Line Interface (CLI)**. So if you type 
 
 2. Download the latest `.jar` file from [here](https://https://github.com/AY2526S2-CS2103T-W12-4/tp/releases).
 
-3. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your contact list.
+3. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your address book.
 
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in, 
 and run `java -jar fam.jar` to run the application.<br>
@@ -177,7 +177,7 @@ Examples:
 
 Adds a tag to an existing person in the address book.
 
-Format: `tagadd INDEX [t/TAG]`
+Format: `tagadd INDEX t/TAG`
 
 * Adds a tag to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * Creates the tag if it does not already exist.
@@ -191,7 +191,7 @@ Examples:
 
 Removes a tag from an existing person in the address book.
 
-Format: `tagrm INDEX [t/TAG]`
+Format: `tagrm INDEX t/TAG`
 
 * Removes a tag from the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * Removes the tag if it exists for the person.
@@ -201,9 +201,34 @@ Format: `tagrm INDEX [t/TAG]`
 Examples:
 * `tagrm 1 t/friend` removes the tag `friend` from the 1st person in the address book.
 
+### Add notes to a person : `note`
+
+Adds a note to an existing person in the address book.
+
+Format: `note INDEX: NOTE`
+
+* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* The new note will be appended to existing notes of the person.
+* When viewing a person, each note will be shown in a new line.
+
+Examples:  
+* `note 1: Family of four, looking for family coverage` adds the note `Family of four, looking for family coverage` to the 1st person in the list.
+
+### Clear a person's notes : `noteclear`
+
+Clears all notes of a person in the address book.
+
+Format: `noteclear INDEX`
+
+* Clears all notes of the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* When `view`ing a person, their removed notes will no longer be shown.
+
+Examples:
+* `noteclear 1` clears all notes of the 1st person in the list.
+
 ### Clearing all entries : `clear`
 
-Clears all entries from the contact list.
+Clears all entries from the address book.
 
 Format: `clear`
 
@@ -259,5 +284,7 @@ Action | Format, Examples
 **List** | `list`
 **Help** | `help`
 **View** | `view INDEX`<br> e.g., `view 3`
-**Tag Add** | `tagadd INDEX [t/TAG]`<br> e.g., `tagadd 1 t/friend`
-**Tag Remove** | `tagrm INDEX [t/TAG]`<br> e.g., `tagrm 1 t/friend`
+**Tag Add** | `tagadd INDEX t/TAG`<br> e.g., `tagadd 1 t/friend`
+**Tag Remove** | `tagrm INDEX t/TAG`<br> e.g., `tagrm 1 t/friend`
+**Note Add** | `note INDEX: NOTE`<br> e.g., `note 1: looking for student coverage`
+**Note Clear** | `noteclear INDEX`<br> e.g., `noteclear 1`
