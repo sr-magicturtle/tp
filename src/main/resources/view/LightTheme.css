@@ -89,7 +89,7 @@
     -fx-label-padding: 0;
     -fx-graphic-text-gap: 0;
     -fx-padding: 8 14 8 14;
-    -fx-cell-size: 125px;
+    -fx-cell-size: 165px;
 }
 
 .list-cell:filled:even,
@@ -158,10 +158,44 @@
 }
 
 .follow-up-date-value {
-    -fx-text-fill: black;
+    -fx-text-fill: #2f4156;
 }
 
 .follow-up-soon {
     -fx-font-weight: bold;
     -fx-underline: true;
+     -fx-text-fill: #2f4156;
+}
+
+.follow-up-overdue {
+    -fx-text-fill: #9aa3af;   /* greyed out */
+    -fx-opacity: 0.85;
+}
+
+.circle-badge {
+    -fx-text-fill: white;
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-font-size: 12px;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.circle-client   {
+    -fx-background-color: #2563eb;
+} /* blue */
+
+.circle-prospect {
+    -fx-background-color: #f59e0b;
+} /* yellow/orange */
+
+.circle-friend{
+    -fx-background-color: #10b981;
+} /* green */
+
+.notes-value {
+    -fx-text-fill: #7b8a8f;
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
+    -fx-text-overrun: ellipsis;
 }
