@@ -156,3 +156,12 @@
     -fx-font-size: 12px;
     -fx-font-family: "Segoe UI Semibold";
 }
+
+.follow-up-date-value {
+    -fx-text-fill: black;
+}
+
+.follow-up-soon {
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}

@@ -34,6 +34,10 @@
         <Label text="Email: " styleClass="person-detail-label" />
         <Label fx:id="email" text="email@example.com" styleClass="person-email-label" />
       </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="0">
+        <Label text="Follow up: " styleClass="person-detail-label" />
+        <Label fx:id="followUpDate" text="-" styleClass="person-detail-label" />
+      </HBox>
     </VBox>
   </VBox>
 
