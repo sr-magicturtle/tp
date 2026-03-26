@@ -26,7 +26,7 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Optional<FollowUpDate> followUpDate;
-    private final Optional<String> notes;
+    private final Optional<Note> notes;
     private final Optional<String> circle;
 
     /**
@@ -34,7 +34,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                   Optional<FollowUpDate> followUpDate,
-                  Optional<String> notes, Optional<String> circle) {
+                  Optional<Note> notes, Optional<String> circle) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -66,7 +66,7 @@ public class Person {
         return followUpDate;
     }
 
-    public Optional<String> getNotes() {
+    public Optional<Note> getNotes() {
         return notes;
     }
 

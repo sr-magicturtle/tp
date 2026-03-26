@@ -27,7 +27,8 @@ FAM is optimized for use via a **Command Line Interface (CLI)**. So if you type 
     * [Note Clear](#clear-a-persons-notes--noteclear)
     * [Circle Add](#add-a-circle-to-a-person--circleadd)
     * [Circle Remove](#removing-a-circle-to-a-person--circlerm)
-    * [Circle Filter](#filtering-circle--circlfilter)
+    * [Circle Filter](#filtering-circle--circlefilter)
+    * [Follow Up](#setting-follow-up-date--followup)
     * [Clear](#clearing-all-entries--clear)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -230,14 +231,14 @@ Examples:
 
 Adds a note to an existing person in the address book.
 
-Format: `note INDEX: NOTE`
+Format: `note INDEX note/NOTE`
 
 * Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * The new note will be appended to existing notes of the person.
 * When viewing a person, each note will be shown in a new line.
 
 Examples:  
-* `note 1: Family of four, looking for family coverage` adds the note `Family of four, looking for family coverage` to the 1st person in the list.
+* `note 1 note/Family of four, looking for family coverage` adds the note `Family of four, looking for family coverage` to the 1st person in the list.
 
 
 ### Clear a person's notes : `noteclear`
@@ -289,7 +290,7 @@ Examples:
 * `circlerm 1` removes the circle from the 1st person in the address book, regardless of the circle.
 
 
-### Filtering Circle : `circlfilter`
+### Filtering Circle : `circlefilter`
 
 Filters and shows all contacts in the address book with the specified circle.
 Circle here referring to the type of relationship user have with the contact.
@@ -298,11 +299,35 @@ Format: `circlefilter CIRCLE`
 
 * All contacts with the specified circle will be shown in their index order in the address book.
 * There are only 3 types of circles: `client`, `prospect` and `friend`. The circle must be one of these 3 types. Any other name to `circlefilter` will be rejected.
-* NOTE: circle can only be filtered via `circlfilter` command.
+* NOTE: circle can only be filtered via `circlefilter` command.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+To go to the original view, simply type `list`
+</div>
 
 Examples:
-* `circlfilter client` shows all contacts with the circle `client` in the address book, in their index order in the address book.
-* `circlfilter family` will lead to an error message as `family` is not an accepted circle type.
+* `circlefilter client` shows all contacts with the circle `client` in the address book, in their index order in the address book.
+* `circlefilter family` will lead to an error message as `family` is not an accepted circle type.
+
+### Setting Follow-Up Date : followup
+
+Sets (or updates) a follow-up date for a contact.
+A follow-up date helps you track when you should check in with a contact.
+
+Format: `followup INDEX d/DATE`
+
+* Sets the follow-up date for the contact at the given INDEX.
+* INDEX must be a positive integer and refer to an existing contact in the current list.
+* DATE must be in the format yyyy-MM-dd (e.g., 2026-04-01).
+* If the follow-up date is within the next 3 days (inclusive), it will be underlined in the contact card.
+* If the follow-up date is more than 3 days away, it will be shown in the normal text colour.
+* If the follow-up date is in the past, it will not be added.
+* If the date previously added has passed, it will appear as overdue (greyed out)
+
+Examples:
+
+* `followup 1 d/2026-04-01` sets the follow-up date of contact 1 to 2026-04-01.
+* `followup 2 d/26-03-2026` will lead to an error message because the date format is invalid (must be yyyy-MM-dd).
 
 
 ### Clearing all entries : `clear`

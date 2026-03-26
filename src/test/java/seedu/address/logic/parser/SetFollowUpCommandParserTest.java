@@ -41,6 +41,6 @@ public class SetFollowUpCommandParserTest {
     @Test
     public void parse_pastDate_failure() {
         assertParseFailure(parser, "1 d/2020-01-01",
-                FollowUpDate.MESSAGE_CONSTRAINTS);
+                "Follow up date cannot be before today.");
     }
 }

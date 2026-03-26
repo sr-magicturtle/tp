@@ -34,8 +34,8 @@ public class FollowUpDate {
     public static boolean isValidFollowUpDate(String test) {
         requireNonNull(test);
         try {
-            LocalDate parsedDate = LocalDate.parse(test);
-            return !parsedDate.isBefore(LocalDate.now());
+            LocalDate.parse(test);
+            return true;
         } catch (DateTimeParseException e) {
             return false;
         }

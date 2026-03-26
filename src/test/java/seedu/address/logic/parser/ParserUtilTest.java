@@ -208,7 +208,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseFollowUpDate_pastDate_throwsParseException() {
-        String expectedMessage = FollowUpDate.MESSAGE_CONSTRAINTS;
+        String expectedMessage = "Follow up date cannot be before today.";
         assertThrows(ParseException.class, expectedMessage, () -> {
             ParserUtil.parseFollowUpDate("2020-01-01");
         });

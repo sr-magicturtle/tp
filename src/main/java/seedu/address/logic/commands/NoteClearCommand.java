@@ -10,6 +10,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
 /**
@@ -65,7 +66,7 @@ public class NoteClearCommand extends Command {
                 personToEdit.getAddress(),
                 personToEdit.getTags(),
                 personToEdit.getFollowUpDate(),
-                Optional.empty(),
+                Optional.<Note>empty(),
                 personToEdit.getCircle()
         );
 

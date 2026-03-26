@@ -4,13 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 
 import java.util.List;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.NoteAddCommandParser;
 import seedu.address.model.Model;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
 /**
@@ -27,15 +28,18 @@ public class NoteAddCommand extends Command {
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Person: %1$s";
     public static final String MESSAGE_INVALID_PERSON = "The person index provided is invalid.";
+    public static final int MAX_WORD_COUNT = 200;
+    public static final String MESSAGE_WORD_LIMIT_EXCEEDED =
+            "Note exceeds the maximum word count of " + MAX_WORD_COUNT + " words.";
 
     private final Index index;
-    private final String note;
+    private final Note note;
 
     /**
      * @param index of the person in the filtered person list
      * @param note  text to set as the person's note
      */
-    public NoteAddCommand(Index index, String note) {
+    public NoteAddCommand(Index index, Note note) {
         requireNonNull(index);
         requireNonNull(note);
         this.index = index;
@@ -53,20 +57,17 @@ public class NoteAddCommand extends Command {
         if (index.getZeroBased() < 0 || index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON);
         }
-        if (note.trim().isEmpty()) {
-            throw new CommandException("Note cannot be empty.");
-        }
-        if (note.trim().split("\\s+").length > 200) {
-            throw new CommandException(NoteAddCommandParser.MESSAGE_WORD_LIMIT_EXCEEDED);
+        if (note.toString().trim().split("\\s+").length > 200) {
+            throw new CommandException(MESSAGE_WORD_LIMIT_EXCEEDED);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        String existingNote = personToEdit.getNotes().orElse("");
-        String updatedNote = existingNote.isEmpty()
-                ? note.trim()
-                : existingNote + "\n" + note.trim();
-        if (updatedNote.split("\\s+").length > NoteAddCommandParser.MAX_WORD_COUNT) {
-            throw new CommandException(NoteAddCommandParser.MESSAGE_WORD_LIMIT_EXCEEDED);
+        String existingValue = personToEdit.getNotes().map(Note::toString).orElse("");
+        String updatedValue = existingValue.isEmpty()
+                ? note.toString().trim()
+                : existingValue + "\n" + note.toString().trim();
+        if (updatedValue.split("\\s+").length > Note.MAX_WORD_COUNT) {
+            throw new CommandException(Note.MESSAGE_WORD_LIMIT_EXCEEDED);
         }
         Person editedPerson = new Person(
                 personToEdit.getName(),
@@ -75,7 +76,7 @@ public class NoteAddCommand extends Command {
                 personToEdit.getAddress(),
                 personToEdit.getTags(),
                 personToEdit.getFollowUpDate(),
-                java.util.Optional.of(updatedNote),
+                Optional.of(new Note(updatedValue)),
                 personToEdit.getCircle()
         );
 

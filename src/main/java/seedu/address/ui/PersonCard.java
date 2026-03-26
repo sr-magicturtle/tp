@@ -37,8 +37,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private HBox followUpRow;
-    @FXML
     private HBox notesRow;
     @FXML
     private Label notes;
@@ -98,17 +96,6 @@ public class PersonCard extends UiPart<Region> {
                 break;
             }
         }, () -> setShown(circleBadge, false));
-
-        person.getNotes().ifPresentOrElse(n -> {
-            String trimmed = n.trim();
-            if (trimmed.isEmpty()) {
-                setShown(notesRow, false);
-                return;
-            }
-
-            setShown(notesRow, true);
-            notes.setText(trimmed);
-        }, () -> setShown(notesRow, false));
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

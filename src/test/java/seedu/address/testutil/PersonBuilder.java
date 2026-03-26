@@ -8,6 +8,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FollowUpDate;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -29,7 +30,7 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private Optional<FollowUpDate> followUpDate;
-    private Optional<String> notes;
+    private Optional<Note> notes;
     private Optional<String> circle;
 
     /**
@@ -109,10 +110,10 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Notes} of the {@code Person} that we are building.
+     * Sets the {@code Note} of the {@code Person} that we are building.
      */
-    public PersonBuilder withNotes(String notes) {
-        this.notes = Optional.of(notes);
+    public PersonBuilder withNotes(Note note) {
+        this.notes = Optional.of(note);
         return this;
     }
 

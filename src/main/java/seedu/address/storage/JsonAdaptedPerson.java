@@ -15,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FollowUpDate;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -74,7 +75,7 @@ class JsonAdaptedPerson {
                 .map(FollowUpDate::toString)
                 .orElse(null);
         notes = source.getNotes()
-                .orElse(null);
+                .map(Note::toString).orElse(null);
         circle = source.getCircle()
                 .orElse(null);
     }
@@ -134,7 +135,9 @@ class JsonAdaptedPerson {
             modelFollowUpDate = Optional.of(new FollowUpDate(followUpDate));
         }
 
-        Optional<String> modelNotes = Optional.ofNullable(notes);
+        Optional<Note> modelNotes = (notes != null)
+                ? Optional.of(new Note(notes))
+                : Optional.empty();
 
         Optional<String> modelCircle = Optional.empty();
         if (circle != null) {

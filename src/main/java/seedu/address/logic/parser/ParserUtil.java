@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -136,6 +137,12 @@ public class ParserUtil {
             throw new ParseException(FollowUpDate.MESSAGE_CONSTRAINTS);
         }
 
-        return new FollowUpDate(trimmedDate);
+        FollowUpDate followUpDate = new FollowUpDate(trimmedDate);
+
+        if (followUpDate.value.isBefore(LocalDate.now())) {
+            throw new ParseException("Follow up date cannot be before today.");
+        }
+
+        return followUpDate;
     }
 }

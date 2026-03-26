@@ -18,6 +18,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
 public class NoteAddCommandTest {
@@ -29,16 +30,16 @@ public class NoteAddCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Person personToEdit = model.getFilteredPersonList().get(0);
-        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB);
+        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB));
 
-        String existingNote = personToEdit.getNotes().orElse("");
+        String existingNote = personToEdit.getNotes().map(Note::toString).orElse("");
         String expectedNote = existingNote.isEmpty() ? NOTE_STUB : existingNote + "\n" + NOTE_STUB;
 
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(),
                 personToEdit.getFollowUpDate(),
-                Optional.of(expectedNote),
+                Optional.of(new Note(expectedNote)),
                 personToEdit.getCircle());
 
         String expectedMessage = String.format(NoteAddCommand.MESSAGE_ADD_NOTE_SUCCESS,
@@ -53,7 +54,7 @@ public class NoteAddCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        NoteAddCommand command = new NoteAddCommand(outOfBoundIndex, NOTE_STUB);
+        NoteAddCommand command = new NoteAddCommand(outOfBoundIndex, new Note(NOTE_STUB));
         assertCommandFailure(command, model, NoteAddCommand.MESSAGE_INVALID_PERSON);
     }
 
@@ -64,16 +65,16 @@ public class NoteAddCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of(NOTE_STUB),
+                Optional.of(new Note(NOTE_STUB)),
                 original.getCircle());
         model.setPerson(original, withExistingNote);
 
-        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB_2);
+        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB_2));
         command.execute(model);
 
         Person result = model.getFilteredPersonList().get(0);
         String expectedCombined = NOTE_STUB + "\n" + NOTE_STUB_2;
-        assertEquals(Optional.of(expectedCombined), result.getNotes());
+        assertEquals(Optional.of(new Note(expectedCombined)), result.getNotes());
     }
 
     @Test
@@ -87,17 +88,17 @@ public class NoteAddCommandTest {
                 original.getCircle());
         model.setPerson(original, withNoNote);
 
-        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB);
+        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB));
         command.execute(model);
 
         Person result = model.getFilteredPersonList().get(0);
-        assertEquals(Optional.of(NOTE_STUB), result.getNotes());
+        assertEquals(Optional.of(new Note(NOTE_STUB)), result.getNotes());
     }
 
     @Test
     public void execute_preservesFollowUpDateAndCircle() throws Exception {
         Person original = model.getFilteredPersonList().get(0);
-        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB);
+        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB));
         command.execute(model);
 
         Person result = model.getFilteredPersonList().get(0);
@@ -114,22 +115,22 @@ public class NoteAddCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of(existingNote),
+                Optional.of(new Note(existingNote)),
                 original.getCircle());
         model.setPerson(original, withExistingNote);
 
         // Adding 101 words would push total to 201 — should fail
         String newNote = "word ".repeat(101).trim();
-        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), newNote);
+        NoteAddCommand command = new NoteAddCommand(Index.fromOneBased(1), new Note(newNote));
 
         assertThrows(CommandException.class, () -> command.execute(model));
     }
     @Test
     public void equals() {
-        NoteAddCommand command1 = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB);
-        NoteAddCommand command2 = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB);
-        NoteAddCommand diffIndex = new NoteAddCommand(Index.fromOneBased(2), NOTE_STUB);
-        NoteAddCommand diffNote = new NoteAddCommand(Index.fromOneBased(1), NOTE_STUB_2);
+        NoteAddCommand command1 = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB));
+        NoteAddCommand command2 = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB));
+        NoteAddCommand diffIndex = new NoteAddCommand(Index.fromOneBased(2), new Note(NOTE_STUB));
+        NoteAddCommand diffNote = new NoteAddCommand(Index.fromOneBased(1), new Note(NOTE_STUB_2));
 
         // same object
         assertTrue(command1.equals(command1));
@@ -148,7 +149,7 @@ public class NoteAddCommandTest {
     @Test
     public void toStringMethod() {
         Index index = Index.fromOneBased(1);
-        NoteAddCommand command = new NoteAddCommand(index, NOTE_STUB);
+        NoteAddCommand command = new NoteAddCommand(index, new Note(NOTE_STUB));
         String expected = NoteAddCommand.class.getCanonicalName()
                 + "{index=" + index + ", note=" + NOTE_STUB + "}";
         assertEquals(expected, command.toString());

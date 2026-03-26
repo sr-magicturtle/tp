@@ -182,16 +182,16 @@
 }
 
 .circle-client   {
-    -fx-background-color: #2563eb;
-} /* blue */
+    -fx-background-color: #299c25;
+} /* green */
 
 .circle-prospect {
     -fx-background-color: #f59e0b;
 } /* yellow/orange */
 
 .circle-friend{
-    -fx-background-color: #10b981;
-} /* green */
+    -fx-background-color: #107bb9;
+} /* blue */
 
 .notes-value {
     -fx-text-fill: #7b8a8f;

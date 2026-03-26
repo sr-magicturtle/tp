@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.NoteAddCommand;
+import seedu.address.model.person.Note;
 
 public class NoteAddCommandParserTest {
     private static final String INVALID_FORMAT_MESSAGE =
@@ -17,26 +18,26 @@ public class NoteAddCommandParserTest {
     @Test
     public void parse_validArgs_success() {
         assertParseSuccess(parser, "1 note/Met at career fair",
-                new NoteAddCommand(INDEX_FIRST_PERSON, "Met at career fair"));
+                new NoteAddCommand(INDEX_FIRST_PERSON, new Note("Met at career fair")));
     }
 
     @Test
     public void parse_leadingTrailingWhitespace_success() {
         assertParseSuccess(parser, "  1 note/Met at career fair  ",
-                new NoteAddCommand(INDEX_FIRST_PERSON, "Met at career fair"));
+                new NoteAddCommand(INDEX_FIRST_PERSON, new Note("Met at career fair")));
     }
 
     @Test
     public void parse_noteTextWithColons_success() {
         assertParseSuccess(parser, "1 note/Note with: extra: colons",
-                new NoteAddCommand(INDEX_FIRST_PERSON, "Note with: extra: colons"));
+                new NoteAddCommand(INDEX_FIRST_PERSON, new Note("Note with: extra: colons")));
     }
 
     @Test
     public void parse_exactlyMaxWords_success() {
-        String note = "word ".repeat(NoteAddCommandParser.MAX_WORD_COUNT).trim();
-        assertParseSuccess(parser, "1 note/" + note,
-                new NoteAddCommand(INDEX_FIRST_PERSON, note));
+        String noteText = "word ".repeat(Note.MAX_WORD_COUNT).trim();
+        assertParseSuccess(parser, "1 note/" + noteText,
+                new NoteAddCommand(INDEX_FIRST_PERSON, new Note(noteText)));
     }
 
     @Test
@@ -65,8 +66,8 @@ public class NoteAddCommandParserTest {
 
     @Test
     public void parse_wordLimitExceeded_throwsParseException() {
-        String tooLong = "word ".repeat(NoteAddCommandParser.MAX_WORD_COUNT + 1).trim();
+        String tooLong = "word ".repeat(Note.MAX_WORD_COUNT + 1).trim();
         assertParseFailure(parser, "1 note/" + tooLong,
-                NoteAddCommandParser.MESSAGE_WORD_LIMIT_EXCEEDED);
+                Note.MESSAGE_WORD_LIMIT_EXCEEDED);
     }
 }

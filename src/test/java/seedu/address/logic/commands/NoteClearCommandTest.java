@@ -16,6 +16,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
 public class NoteClearCommandTest {
@@ -30,7 +31,7 @@ public class NoteClearCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of("Met at career fair"),
+                Optional.of(new Note("Met at career fair")),
                 original.getCircle());
         model.setPerson(original, withNote);
 
@@ -97,7 +98,7 @@ public class NoteClearCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of("Some important note"),
+                Optional.of(new Note("Some important note")),
                 original.getCircle());
         model.setPerson(original, withNote);
 
@@ -115,7 +116,7 @@ public class NoteClearCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of("Some note"),
+                Optional.of(new Note("Some note")),
                 original.getCircle());
         model.setPerson(original, withNote);
 
@@ -135,7 +136,7 @@ public class NoteClearCommandTest {
                 original.getName(), original.getPhone(), original.getEmail(),
                 original.getAddress(), original.getTags(),
                 original.getFollowUpDate(),
-                Optional.of("Some note"),
+                Optional.of(new Note("Some note")),
                 original.getCircle());
         model.setPerson(original, withNote);
 
