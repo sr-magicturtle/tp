@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -27,6 +26,9 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML private HBox notesRow;
     @FXML private HBox circleRow;
 
+    /**
+     * Creates a {@code PersonDetailPanel} with the given {@code Person} to display.
+     */
     public PersonDetailPanel(Person person) {
         super(FXML);
 

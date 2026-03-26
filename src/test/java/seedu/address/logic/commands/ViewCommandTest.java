@@ -58,7 +58,7 @@ public class ViewCommandTest {
 
         String expectedMessage = String.format(
                 ViewCommand.MESSAGE_SUCCESS,
-                Messages.format(personToView)
+                personToView.getName()
         );
 
         expectedModel.updateFilteredPersonList(p -> p.equals(personToView));
