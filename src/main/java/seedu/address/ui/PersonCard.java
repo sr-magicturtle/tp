@@ -97,17 +97,6 @@ public class PersonCard extends UiPart<Region> {
             }
         }, () -> setShown(circleBadge, false));
 
-        person.getNotes().ifPresentOrElse(n -> {
-            String trimmed = n.trim();
-            if (trimmed.isEmpty()) {
-                setShown(notesRow, false);
-                return;
-            }
-
-            setShown(notesRow, true);
-            notes.setText(trimmed);
-        }, () -> setShown(notesRow, false));
-
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

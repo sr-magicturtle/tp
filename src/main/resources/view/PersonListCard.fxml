@@ -50,18 +50,6 @@
   <VBox alignment="CENTER_LEFT" spacing="8" prefWidth="420" minWidth="420">
     <Label fx:id="address" text="Address" styleClass="person-address-label" wrapText="true" />
     <HBox fx:id="notesRow" alignment="CENTER_LEFT" spacing="6" visible="false" managed="false">
-      <Label text="Notes:" styleClass="person-detail-label">
-        <minWidth>
-          <Region fx:constant="USE_PREF_SIZE"/>
-        </minWidth>
-      </Label>
-
-      <Label fx:id="notes"
-             styleClass="person-detail-label"
-             wrapText="false"
-             textOverrun="ELLIPSIS"
-             HBox.hgrow="ALWAYS"
-             minWidth="0"/>
     </HBox>
   </VBox>
 
