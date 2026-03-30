@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.model.person.Note.MAX_CHAR_COUNT;
+import static seedu.address.model.person.Note.MESSAGE_CHAR_LIMIT_EXCEEDED;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,14 +25,11 @@ public class NoteAddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a note to the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX " + PREFIX_NOTE + "NOTE (max 200 words)\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE + "Met at career fair";
+            + "Parameters: INDEX " + PREFIX_NOTE + "NOTE (max 1000 characters)\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE + "Looking for family coverage";
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Person: %1$s";
     public static final String MESSAGE_INVALID_PERSON = "The person index provided is invalid.";
-    public static final int MAX_WORD_COUNT = 200;
-    public static final String MESSAGE_WORD_LIMIT_EXCEEDED =
-            "Note exceeds the maximum word count of " + MAX_WORD_COUNT + " words.";
 
     private final Index index;
     private final Note note;
@@ -58,8 +57,8 @@ public class NoteAddCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_PERSON);
         }
 
-        if (note.toString().trim().split("\\s+").length > 200) {
-            throw new CommandException(MESSAGE_WORD_LIMIT_EXCEEDED);
+        if (note.charCount() > MAX_CHAR_COUNT) {
+            throw new CommandException(MESSAGE_CHAR_LIMIT_EXCEEDED);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
@@ -68,8 +67,8 @@ public class NoteAddCommand extends Command {
                 ? note.toString().trim()
                 : existingValue + "\n" + note.toString().trim();
 
-        if (updatedValue.split("\\s+").length > Note.MAX_WORD_COUNT) {
-            throw new CommandException(Note.MESSAGE_WORD_LIMIT_EXCEEDED);
+        if (updatedValue.length() > MAX_CHAR_COUNT) {
+            throw new CommandException(MESSAGE_CHAR_LIMIT_EXCEEDED);
         }
 
         Person editedPerson = new Person(

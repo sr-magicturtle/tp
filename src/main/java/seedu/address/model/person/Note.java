@@ -11,9 +11,9 @@ public class Note {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Notes must not be blank.";
-    public static final int MAX_WORD_COUNT = 200;
-    public static final String MESSAGE_WORD_LIMIT_EXCEEDED =
-            "Note exceeds the maximum word count of " + MAX_WORD_COUNT + " words.";
+    public static final int MAX_CHAR_COUNT = 1000;
+    public static final String MESSAGE_CHAR_LIMIT_EXCEEDED =
+            "Note exceeds the maximum character count of " + MAX_CHAR_COUNT + " characters.";
 
     public final String value;
 
@@ -29,18 +29,18 @@ public class Note {
     }
 
     /**
-     * Returns true if a given string is non-blank.
+     * Returns true if a given string is non-blank && <= MAX_CHAR_COUNT.
      * @param test user input.
      */
     public static boolean isValidNote(String test) {
-        return !test.trim().isEmpty();
+        return !test.trim().isEmpty() && test.length() <= MAX_CHAR_COUNT;
     }
 
     /**
-     * Returns the number of words in this note.
+     * Returns the number of characters in this note.
      */
-    public int wordCount() {
-        return value.trim().split("\\s+").length;
+    public int charCount() {
+        return value.trim().length();
     }
 
     @Override

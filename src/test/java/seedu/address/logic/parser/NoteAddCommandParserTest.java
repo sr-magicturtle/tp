@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.person.Note.MAX_CHAR_COUNT;
+import static seedu.address.model.person.Note.MESSAGE_CHAR_LIMIT_EXCEEDED;
 import static seedu.address.model.person.Note.MESSAGE_CONSTRAINTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -36,7 +38,7 @@ public class NoteAddCommandParserTest {
 
     @Test
     public void parse_exactlyMaxWords_success() {
-        String noteText = "word ".repeat(Note.MAX_WORD_COUNT).trim();
+        String noteText = "w".repeat(MAX_CHAR_COUNT).trim();
         assertParseSuccess(parser, "1 note/" + noteText,
                 new NoteAddCommand(INDEX_FIRST_PERSON, new Note(noteText)));
     }
@@ -67,8 +69,8 @@ public class NoteAddCommandParserTest {
 
     @Test
     public void parse_wordLimitExceeded_throwsParseException() {
-        String tooLong = "word ".repeat(Note.MAX_WORD_COUNT + 1).trim();
+        String tooLong = "w".repeat(MAX_CHAR_COUNT + 1).trim();
         assertParseFailure(parser, "1 note/" + tooLong,
-                Note.MESSAGE_WORD_LIMIT_EXCEEDED);
+                MESSAGE_CHAR_LIMIT_EXCEEDED);
     }
 }
