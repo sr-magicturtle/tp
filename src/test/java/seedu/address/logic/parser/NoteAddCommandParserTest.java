@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.person.Note.MESSAGE_CONSTRAINTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ public class NoteAddCommandParserTest {
     @Test
     public void parse_emptyNoteText_throwsParseException() {
         // Separator present but nothing after it
-        assertParseFailure(parser, "1 note/", INVALID_FORMAT_MESSAGE);
+        assertParseFailure(parser, "1 note/", MESSAGE_CONSTRAINTS);
     }
 
     @Test
