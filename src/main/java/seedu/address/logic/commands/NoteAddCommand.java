@@ -29,7 +29,7 @@ public class NoteAddCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE + "Looking for family coverage";
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Person: %1$s";
-    public static final String MESSAGE_INVALID_PERSON = "The person index provided is invalid.";
+    public static final String MESSAGE_INVALID_INDEX = "The person index provided is out of range.";
 
     private final Index index;
     private final Note note;
@@ -54,7 +54,7 @@ public class NoteAddCommand extends Command {
         }
 
         if (index.getZeroBased() < 0 || index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON);
+            throw new CommandException(MESSAGE_INVALID_INDEX);
         }
 
         if (note.charCount() > MAX_CHAR_COUNT) {

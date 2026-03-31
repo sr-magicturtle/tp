@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.NoteAddCommand.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.model.person.Note.MAX_CHAR_COUNT;
 import static seedu.address.model.person.Note.MESSAGE_CHAR_LIMIT_EXCEEDED;
@@ -24,13 +25,12 @@ public class NoteAddCommandParser implements Parser<NoteAddCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
 
-        // Validate index
+        // Validate index is positive integer
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteAddCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(MESSAGE_INVALID_INDEX, pe);
         }
 
         // Validate note/ prefix is present
@@ -43,8 +43,7 @@ public class NoteAddCommandParser implements Parser<NoteAddCommand> {
 
         // Validate note is not empty
         if (noteText.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_CONSTRAINTS, NoteAddCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_CONSTRAINTS);
         }
 
         // Validate the word count of the new input is <= MAX_CHAR_COUNT
