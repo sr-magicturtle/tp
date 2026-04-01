@@ -22,7 +22,7 @@ public class NoteAddCommandParser implements Parser<NoteAddCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
 
-        // Validate index
+        // Validate presence of index
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
@@ -41,8 +41,7 @@ public class NoteAddCommandParser implements Parser<NoteAddCommand> {
 
         // Validate note is not empty
         if (noteText.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_CONSTRAINTS, NoteAddCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_CONSTRAINTS);
         }
 
         // Validate the word count of the new input is <= MAX_CHAR_COUNT
