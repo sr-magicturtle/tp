@@ -25,10 +25,10 @@ public class SetFollowUpCommandTest {
     @Test
     public void execute_validIndex_success() throws Exception {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        FollowUpDate followUpDate = new FollowUpDate("2099-12-31");
+        FollowUpDate followUpDate = new FollowUpDate("2026-12-31");
         SetFollowUpCommand setFollowUpCommand = new SetFollowUpCommand(INDEX_FIRST_PERSON, followUpDate);
 
-        Person editedPerson = new PersonBuilder(personToEdit).withFollowUpDate("2099-12-31").build();
+        Person editedPerson = new PersonBuilder(personToEdit).withFollowUpDate("2026-12-31").build();
 
         String expectedMessage = String.format(SetFollowUpCommand.MESSAGE_SET_FOLLOW_UP_SUCCESS,
                 seedu.address.logic.Messages.format(editedPerson));
@@ -65,5 +65,47 @@ public class SetFollowUpCommandTest {
         org.junit.jupiter.api.Assertions.assertNotEquals(firstCommand, secondCommand);
         org.junit.jupiter.api.Assertions.assertNotEquals(firstCommand, null);
         org.junit.jupiter.api.Assertions.assertNotEquals(firstCommand, new ClearCommand());
+    }
+
+    @Test
+    public void execute_pastDate_successWithWarning() throws Exception {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        FollowUpDate followUpDate = new FollowUpDate("2020-01-01");
+        SetFollowUpCommand setFollowUpCommand = new SetFollowUpCommand(INDEX_FIRST_PERSON, followUpDate);
+
+        Person editedPerson = new PersonBuilder(personToEdit).withFollowUpDate("2020-01-01").build();
+
+        String expectedMessage = String.format(SetFollowUpCommand.MESSAGE_SET_FOLLOW_UP_SUCCESS,
+                seedu.address.logic.Messages.format(editedPerson))
+                + "\n" + SetFollowUpCommand.MESSAGE_PAST_DATE_WARNING;
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        CommandResult commandResult = setFollowUpCommand.execute(model);
+
+        assertEquals(expectedMessage, commandResult.getFeedbackToUser());
+        assertEquals(expectedModel, model);
+    }
+
+    @Test
+    public void execute_farFuture_successWithWarning() throws Exception {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        FollowUpDate followUpDate = new FollowUpDate("2099-12-31");
+        SetFollowUpCommand setFollowUpCommand = new SetFollowUpCommand(INDEX_FIRST_PERSON, followUpDate);
+
+        Person editedPerson = new PersonBuilder(personToEdit).withFollowUpDate("2099-12-31").build();
+
+        String expectedMessage = String.format(SetFollowUpCommand.MESSAGE_SET_FOLLOW_UP_SUCCESS,
+                seedu.address.logic.Messages.format(editedPerson))
+                + "\n" + SetFollowUpCommand.MESSAGE_FAR_FUTURE_WARNING;
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        CommandResult commandResult = setFollowUpCommand.execute(model);
+
+        assertEquals(expectedMessage, commandResult.getFeedbackToUser());
+        assertEquals(expectedModel, model);
     }
 }

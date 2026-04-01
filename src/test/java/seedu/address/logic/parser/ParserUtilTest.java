@@ -207,10 +207,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseFollowUpDate_pastDate_throwsParseException() {
-        String expectedMessage = "Follow up date cannot be before today.";
-        assertThrows(ParseException.class, expectedMessage, () -> {
-            ParserUtil.parseFollowUpDate("2020-01-01");
-        });
+    public void parseFollowUpDate_pastDate_returnsFollowUpDate() throws Exception {
+        assertEquals(new FollowUpDate("2020-01-01"), ParserUtil.parseFollowUpDate("2020-01-01"));
     }
 }

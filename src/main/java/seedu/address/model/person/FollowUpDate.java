@@ -13,14 +13,14 @@ import java.time.format.DateTimeParseException;
 public class FollowUpDate {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Follow up date should be in YYYY-MM-DD format and be today or later.";
+            "Follow up date should be in YYYY-MM-DD format.";
 
     public final LocalDate value;
 
     /**
      * Constructs a {@code FollowUpDate}.
      *
-     * @param date A valid follow-up date.
+     * @param date A valid follow-up date string in YYYY-MM-DD format.
      */
     public FollowUpDate(String date) {
         requireNonNull(date);
@@ -29,10 +29,9 @@ public class FollowUpDate {
     }
 
     /**
-     * Returns true if a given string is a valid follow-up date.
+     * Returns true if a given string is a valid follow-up date in YYYY-MM-DD format.
      */
     public static boolean isValidFollowUpDate(String test) {
-        requireNonNull(test);
         try {
             LocalDate.parse(test);
             return true;
@@ -56,8 +55,8 @@ public class FollowUpDate {
             return false;
         }
 
-        FollowUpDate otherFollowUpDate = (FollowUpDate) other;
-        return value.equals(otherFollowUpDate.value);
+        FollowUpDate otherDate = (FollowUpDate) other;
+        return value.equals(otherDate.value);
     }
 
     @Override

@@ -3,11 +3,10 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -16,28 +15,29 @@ import seedu.address.model.person.FollowUpDate;
 import seedu.address.model.person.Person;
 
 /**
- * Sets the follow-up date of an existing person in the address book.
+ * Sets a follow-up date for an existing person in the address book.
  */
 public class SetFollowUpCommand extends Command {
 
     public static final String COMMAND_WORD = "followup";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sets the follow up date of the person identified by the index number used "
+            + ": Sets a follow-up date for the person identified by the index number used "
             + "in the displayed person list.\n"
-            + "Parameters: INDEX d/YYYY-MM-DD\n"
-            + "Example: " + COMMAND_WORD + " 1 d/2026-03-25";
+            + "Parameters: INDEX d/FOLLOW_UP_DATE\n"
+            + "Example: " + COMMAND_WORD + " 1 d/2026-12-31";
 
-    public static final String MESSAGE_SET_FOLLOW_UP_SUCCESS =
-            "Set follow up date for Person: %1$s";
-
-    private static final Logger logger = LogsCenter.getLogger(SetFollowUpCommand.class);
+    public static final String MESSAGE_SET_FOLLOW_UP_SUCCESS = "Set follow up date for: %1$s";
+    public static final String MESSAGE_PAST_DATE_WARNING =
+            "Warning: follow up date is before today.";
+    public static final String MESSAGE_FAR_FUTURE_WARNING =
+            "Warning: follow up date is more than 5 years from today.";
 
     private final Index targetIndex;
     private final FollowUpDate followUpDate;
 
     /**
-     * Creates a SetFollowUpCommand to set the follow-up date of the person at the specified index.
+     * Creates a SetFollowUpCommand to set the {@code followUpDate} for the person at the specified {@code targetIndex}.
      */
     public SetFollowUpCommand(Index targetIndex, FollowUpDate followUpDate) {
         requireNonNull(targetIndex);
@@ -49,7 +49,6 @@ public class SetFollowUpCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert followUpDate != null;
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -70,13 +69,23 @@ public class SetFollowUpCommand extends Command {
                 personToEdit.getCircle()
         );
 
-        logger.fine("Setting follow up date for person at index "
-                + targetIndex.getOneBased() + " to " + followUpDate);
-
         model.setPerson(personToEdit, editedPerson);
 
-        return new CommandResult(
+        StringBuilder feedback = new StringBuilder(
                 String.format(MESSAGE_SET_FOLLOW_UP_SUCCESS, Messages.format(editedPerson)));
+
+        LocalDate today = LocalDate.now();
+        LocalDate date = followUpDate.value;
+
+        if (date.isBefore(today)) {
+            feedback.append("\n").append(MESSAGE_PAST_DATE_WARNING);
+        }
+
+        if (date.isAfter(today.plusYears(5))) {
+            feedback.append("\n").append(MESSAGE_FAR_FUTURE_WARNING);
+        }
+
+        return new CommandResult(feedback.toString());
     }
 
     @Override
