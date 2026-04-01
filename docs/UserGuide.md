@@ -235,8 +235,17 @@ Adds a note to an existing person in the address book.
 
 Format: `note INDEX note/NOTE`
 
-* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* The new note will be appended to existing notes of the person.
+* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​ 
+* Any note to be added cannot exceed 1000 characters in length.
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Warning:**
+Notes that exceed 1000 characters (including newline separators) will be rejected.
+</div>
+
+* The 1000-character limit also applied for the total length of notes for each person. This is to ensure readability and prevent excessively long notes. 
+* After adding the first note, additional notes will be appended to existing notes of the person.
+* Each added note is separated by a newline, which also counts toward the 1000-character limit.
+* Blank notes (i.e. `note/` without any text after it) will not be added.
 * When viewing a person, each note will be shown in a new line.
 
 Examples:
@@ -401,4 +410,3 @@ Action | Format, Examples
 **Circle Add** | `circleadd INDEX c/CIRCLE`<br> e.g., `circleadd 1 c/client`
 **Circle Remove** | `circlerm INDEX`<br> e.g., `circlerm 1`
 **Circle Filter** | `circlefilter CIRCLE`<br> e.g., `circlefilter client`
-
