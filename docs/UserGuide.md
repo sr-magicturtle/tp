@@ -113,10 +113,15 @@ Format: `help`
 
 Adds a person to the address book.
 
+* Minimum required fields: `n/NAME` and `p/PHONE_NUMBER`.
+* Name has to alphanumeric and can contain spaces, but cannot be blank.
+* Phone number has to be numeric and cannot be blank.
+* Email, address, tag are optional. These values can be updated after the contact is created using `edit` command
+
 Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have maximum 5 number of tags.
 </div>
 
 Examples:
