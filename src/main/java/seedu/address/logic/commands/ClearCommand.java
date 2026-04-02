@@ -40,6 +40,6 @@ public class ClearCommand extends Command {
         }
 
         model.setAddressBook(new AddressBook());
-        return new CommandResult(MESSAGE_CLEAR_SUCCESS);
+        return new CommandResult(MESSAGE_CLEAR_SUCCESS, false, false, false, true);
     }
 }

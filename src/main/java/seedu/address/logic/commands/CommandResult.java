@@ -20,16 +20,20 @@ public class CommandResult {
     private final boolean exit;
 
     /** The application should go into view mode. */
-    private final boolean viewMode;
+    private final boolean showView;
+
+    /** The application should exit view mode. */
+    private final boolean exitView;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean viewMode) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean showView, boolean exitView) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.viewMode = viewMode;
+        this.showView = showView;
+        this.exitView = exitView;
     }
 
     /**
@@ -37,7 +41,8 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false);
+        this(feedbackToUser, false, false,
+                false, false);
     }
 
     public String getFeedbackToUser() {
@@ -52,8 +57,12 @@ public class CommandResult {
         return exit;
     }
 
-    public boolean isViewMode() {
-        return viewMode;
+    public boolean isShowView() {
+        return showView;
+    }
+
+    public boolean isExitView() {
+        return exitView;
     }
 
     @Override
@@ -70,12 +79,14 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && exit == otherCommandResult.exit
+                && showView == otherCommandResult.showView
+                && exitView == otherCommandResult.exitView;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, showHelp, exit, showView, exitView);
     }
 
     @Override
@@ -84,6 +95,8 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
+                .add("showView", showView)
+                .add("exitView", exitView)
                 .toString();
     }
 

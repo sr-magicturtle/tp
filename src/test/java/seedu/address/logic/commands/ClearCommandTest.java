@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccessWithExitView;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class ClearCommandTest {
 
         ClearCommand command = new ClearCommand(msg -> true);
 
-        assertCommandSuccess(command, model, ClearCommand.MESSAGE_CLEAR_SUCCESS, expectedModel);
+        assertCommandSuccessWithExitView(command, model, ClearCommand.MESSAGE_CLEAR_SUCCESS, expectedModel);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class ClearCommandTest {
 
         ClearCommand command = new ClearCommand(msg -> true);
 
-        assertCommandSuccess(command, model, ClearCommand.MESSAGE_CLEAR_SUCCESS, expectedModel);
+        assertCommandSuccessWithExitView(command, model, ClearCommand.MESSAGE_CLEAR_SUCCESS, expectedModel);
     }
 
     @Test

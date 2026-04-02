@@ -76,7 +76,7 @@ public class ViewCommand extends Command {
         model.updateFilteredPersonList(predicate);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToView.getName()),
-                false, false, true);
+                false, false, true, false);
     }
 
     @Override

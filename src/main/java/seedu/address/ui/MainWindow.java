@@ -207,17 +207,20 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isViewMode()) {
-                handleViewPerson();
-            } else if (isInViewMode && logic.getFilteredPersonList().size() == 1) {
-                // Still effectively viewing one person after an edit command:
-                // refresh detail panel with updated person data.
-                handleViewPerson();
+            if (isInViewMode) {
+                if (commandResult.isExitView()) {
+                    clearDetailPanel();
+                } else {
+                    handleViewPerson();
+                }
             } else {
-                // Commands like list/find/remind that show multiple persons should exit view mode.
-                clearDetailPanel();
+                if (commandResult.isShowView()) {
+                    isInViewMode = true;
+                    handleViewPerson();
+                } else {
+                    clearDetailPanel();
+                }
             }
-
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);

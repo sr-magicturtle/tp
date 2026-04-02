@@ -45,7 +45,7 @@ public class RemindCommand extends Command {
         logger.fine("Filtering persons with follow up dates in the next " + days + " day(s)");
         model.updateFilteredPersonList(predicate);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, days));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, days), false , false, false, true);
     }
 
     @Override

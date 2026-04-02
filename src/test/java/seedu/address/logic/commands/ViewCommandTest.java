@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccessWithViewMode;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Collections;
@@ -56,7 +56,7 @@ public class ViewCommandTest {
 
         expectedModel.updateFilteredPersonList(p -> p.isSamePerson(personToView));
 
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertCommandSuccessWithViewMode(command, model, expectedMessage, expectedModel);
 
         assertEquals(Collections.singletonList(model.getFilteredPersonList().get(0)),
                 model.getFilteredPersonList());

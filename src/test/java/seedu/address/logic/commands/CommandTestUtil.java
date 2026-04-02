@@ -111,6 +111,26 @@ public class CommandTestUtil {
     }
 
     /**
+     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
+     * that takes a string {@code expectedMessage} and expects the command to enter view mode.
+     */
+    public static void assertCommandSuccessWithViewMode(Command command, Model actualModel, String expectedMessage,
+                                                        Model expectedModel) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, true, false);
+        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
+    }
+
+    /**
+     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
+     * that takes a string {@code expectedMessage} and expects the command to exit view mode.
+     */
+    public static void assertCommandSuccessWithExitView(Command command, Model actualModel, String expectedMessage,
+                                                        Model expectedModel) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, true);
+        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
+    }
+
+    /**
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
