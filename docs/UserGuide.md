@@ -31,6 +31,8 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
     * [Circle Remove](#removing-a-circle-to-a-person--circlerm)
     * [Circle Filter](#filtering-circle--circlefilter)
     * [Follow Up Date](#setting-follow-up-date--followup)
+    * [Clear Follow-Up Date](#clearing-a-follow-up-date--followupclear)
+    * [Remind](#listing-upcoming-follow-ups--remind)
     * [Clear](#clearing-all-entries--clear)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -49,25 +51,25 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 3. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your address book.
 
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in,
-and run `java -jar fam.jar` to run the application.<br>
+   and run `java -jar fam.jar` to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 5. Type a command in the command box and press Enter to execute it.
    Some example commands you can try:
 
-   * `help` : Opens the help window.
+    * `help` : Opens the help window.
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` :
-   Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` :
+      Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 6. Refer to [Features](#features) for details of each command.
 
@@ -92,11 +94,11 @@ and run `java -jar fam.jar` to run the application.<br>
   e.g. `n/NAME p/PHONE_NUMBER` is the same as `p/PHONE_NUMBER n/NAME`.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`)
-will be ignored.<br>
+  will be ignored.<br>
   e.g. `help 123` will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands
-that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+  that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
 
@@ -146,11 +148,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [d/FOLLO
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e. adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com c/friend` Edits the phone number, email address and circle of the 1st 
+*  `edit 1 p/91234567 e/johndoe@example.com c/friend` Edits the phone number, email address and circle of the 1st
 person to be `91234567`, `johndoe@example.com` and `friend` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -192,8 +193,8 @@ After running `view`, the app enters **View Mode**, displaying the full details 
 
 While in View Mode:
 * The displayed contact is always shown at **index 1** in the list
-* Any command that takes an index (e.g. `edit`, `delete`, `note`) must use **index 1** to operate on the displayed 
-contact
+* Any command that takes an index (e.g. `edit`, `delete`, `note`) must use **index 1** to operate on the displayed
+  contact
 * Commands that will exit View Mode: `add`, `delete`, `list`, `find`, `remind`, `clear`
 * Run `list` to exit View Mode and return to the full contact list
 
@@ -251,14 +252,14 @@ Adds a note to an existing person in the address book.
 
 Format: `note INDEX note/NOTE`
 
-* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​ 
+* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * Any note to be added cannot exceed 1000 characters in length.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Warning:**
 Notes that exceed 1000 characters (including newline separators) will be rejected.
 </div>
 
-* The 1000-character limit also applied for the total length of notes for each person. This is to ensure readability and prevent excessively long notes. 
+* The 1000-character limit also applied for the total length of notes for each person. This is to ensure readability and prevent excessively long notes.
 * After adding the first note, additional notes will be appended to existing notes of the person.
 * Each added note is separated by a newline, which also counts toward the 1000-character limit.
 * Blank notes (i.e. `note/` without any text after it) will not be added.
@@ -338,24 +339,48 @@ Examples:
 
 ### Setting follow-up date : `followup`
 
-Sets (or updates) a follow-up date for a contact.
-A follow-up date helps you track when you should check in with a contact.
+Sets or updates the follow-up date for a contact.
 
 Format: `followup INDEX d/DATE`
 
-* Sets the follow-up date for the contact at the given INDEX.
-* INDEX must be a positive integer and refer to an existing contact in the current list.
-* DATE must be in the format yyyy-MM-dd (e.g., 2026-04-01).
-* If the follow-up date is within the next 3 days (inclusive), it will be underlined in the contact card.
-* If the follow-up date is more than 3 days away, it will be shown in the normal text colour.
-* If the follow-up date is in the past, it will not be added.
-* If the date previously added has passed, it will appear as overdue (greyed out)
+* Sets the follow-up date for the contact at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** `1, 2, 3, …`
+* `DATE` must be in the format `YYYY-MM-DD` (e.g. `2026-04-01`).
+* Past dates are allowed, but the app will show a warning after the date is set.
+* Dates more than 5 years from today are allowed, but the app will show a warning after the date is set.
 
 Examples:
+* `followup 1 d/2026-04-01` sets the follow-up date of contact 1 to `2026-04-01`.
+* `followup 2 d/2020-01-01` sets the follow-up date of contact 2 to `2020-01-01` and shows a warning because the date is before today.
+* `followup 3 d/26-03-2026` will lead to an error message because the date format is invalid.
 
-* `followup 1 d/2026-04-01` sets the follow-up date of contact 1 to 2026-04-01.
-* `followup 2 d/26-03-2026` will lead to an error message because the date format is invalid (must be yyyy-MM-dd).
+### Clearing a follow-up date : `followupclear`
 
+Clears the follow-up date of a contact.
+
+Format: `followupclear INDEX`
+
+* Clears the follow-up date of the contact at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** `1, 2, 3, …`
+
+Examples:
+* `followupclear 1` clears the follow-up date of the 1st contact in the list.
+
+### Listing upcoming follow-ups : `remind`
+
+Lists all contacts whose follow-up dates fall within the next specified number of days, inclusive of today.
+
+Format: `remind DAYS`
+
+* Shows contacts with follow-up dates from today up to `DAYS` days ahead.
+* `DAYS` **must be a positive integer**.
+* Contacts without a follow-up date will not be shown.
+
+Examples:
+* `remind 3` lists all contacts with follow-up dates within the next 3 days.
+* `remind 7` lists all contacts with follow-up dates within the next 7 days.
 
 ### Clearing all entries : `clear`
 
@@ -426,3 +451,6 @@ Action | Format, Examples
 **Circle Add** | `circleadd INDEX c/CIRCLE`<br> e.g., `circleadd 1 c/client`
 **Circle Remove** | `circlerm INDEX`<br> e.g., `circlerm 1`
 **Circle Filter** | `circlefilter CIRCLE`<br> e.g., `circlefilter client`
+**Follow Up** | `followup INDEX d/DATE`<br> e.g., `followup 1 d/2026-04-01`
+**Follow Up Clear** | `followupclear INDEX`<br> e.g., `followupclear 1`
+**Remind** | `remind DAYS`<br> e.g., `remind 3`
