@@ -10,6 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Address {
 
     public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
+    public static final String DEFAULT_ADDRESS = "MISSING_ADDRESS";
+
 
     /*
      * The first character of the address must not be a whitespace,

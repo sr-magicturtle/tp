@@ -75,6 +75,26 @@ public class Person {
         return circle;
     }
 
+    public boolean isDefaultEmail(){
+        boolean result = false;
+
+        if (this.email.toString() == Email.DEFAULT_EMAIL){
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean isDefaultAddress(){
+        boolean result = false;
+
+        if (this.address.toString() == Address.DEFAULT_ADDRESS){
+            result = true;
+        }
+
+        return result;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
