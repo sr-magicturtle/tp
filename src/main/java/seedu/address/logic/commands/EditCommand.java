@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CIRCLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOLLOW_UP_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -21,8 +23,10 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FollowUpDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -44,6 +48,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_FOLLOW_UP_DATE + "FOLLOW_UP_DATE]...\n"
+            + "[" + PREFIX_CIRCLE + "CIRCLE]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -101,11 +107,13 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Optional<FollowUpDate> updatedFollowUpDate = editPersonDescriptor.getFollowUpDate()
+                .or(personToEdit::getFollowUpDate);
+        Optional<Circle> updatedCircle = editPersonDescriptor.getCircle()
+                .or(personToEdit::getCircle);
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                personToEdit.getFollowUpDate(),
-                personToEdit.getNotes(),
-                personToEdit.getCircle());
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedFollowUpDate,
+                personToEdit.getNotes(), updatedCircle);
     }
 
     @Override
@@ -142,6 +150,8 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Optional<FollowUpDate> followUpDate = Optional.empty();
+        private Optional<Circle> circle = Optional.empty();
 
         public EditPersonDescriptor() {}
 
@@ -156,13 +166,17 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setFollowUpDate(toCopy.followUpDate);
+            setCircle(toCopy.circle);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags)
+                    || followUpDate.isPresent()
+                    || circle.isPresent();
         }
 
         public void setName(Name name) {
@@ -214,6 +228,22 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setFollowUpDate(Optional<FollowUpDate> followUpDate) {
+            this.followUpDate = followUpDate;
+        }
+
+        public Optional<FollowUpDate> getFollowUpDate() {
+            return followUpDate;
+        }
+
+        public void setCircle(Optional<Circle> circle) {
+            this.circle = circle;
+        }
+
+        public Optional<Circle> getCircle() {
+            return circle;
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -230,7 +260,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(followUpDate, otherEditPersonDescriptor.followUpDate)
+                    && Objects.equals(circle, otherEditPersonDescriptor.circle);
         }
 
         @Override
@@ -241,6 +273,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("followUpDate", followUpDate)
+                    .add("circle", circle)
                     .toString();
         }
     }

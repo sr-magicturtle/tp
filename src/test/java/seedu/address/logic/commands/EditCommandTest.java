@@ -45,6 +45,8 @@ public class EditCommandTest {
                 .withEmail("amy@example.com")
                 .withAddress("New Address")
                 .withTags("friend")
+                .withFollowUpDate("2027-01-01")
+                .withCircle("friend")
                 .build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();

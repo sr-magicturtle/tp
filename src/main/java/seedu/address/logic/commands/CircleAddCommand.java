@@ -72,14 +72,14 @@ public class CircleAddCommand extends Command {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            Optional.of(circle.circleName)
+            Optional.of(circle)
         );
 
         model.setPerson(personAtIndex, editedPerson);
-        logger.fine("Circle added: " + circle.circleName + " to person: " + editedPerson.getName());
+        logger.fine("Circle added: " + circle.getCircleName() + " to person: " + editedPerson.getName());
 
         return new CommandResult(String.format(MESSAGE_CIRCLE_PERSON_SUCCESS,
-            circle.circleName, editedPerson.getName()));
+            circle.getCircleName(), editedPerson.getName()));
     }
 
     @Override

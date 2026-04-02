@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.circle.Circle;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,14 +28,14 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Optional<FollowUpDate> followUpDate;
     private final Optional<Note> notes;
-    private final Optional<String> circle;
+    private final Optional<Circle> circle;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                   Optional<FollowUpDate> followUpDate,
-                  Optional<Note> notes, Optional<String> circle) {
+                  Optional<Note> notes, Optional<Circle> circle) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -70,7 +71,7 @@ public class Person {
         return notes;
     }
 
-    public Optional<String> getCircle() {
+    public Optional<Circle> getCircle() {
         return circle;
     }
 

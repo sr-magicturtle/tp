@@ -41,7 +41,7 @@ public class CircleFilterCommand extends Command {
         requireNonNull(model);
 
         model.updateFilteredPersonList(person -> person.getCircle()
-            .map(c -> c.equals(circleName))
+            .map(c -> c.getCircleName().equals(circleName))
             .orElse(false));
 
         List<Person> filteredList = model.getFilteredPersonList();

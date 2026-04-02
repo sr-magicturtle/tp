@@ -36,25 +36,25 @@ public class CircleTest {
     public void constructor_validCircleName_success() {
         // lowercase valid names
         Circle circleClient = new Circle("client");
-        assert circleClient.circleName.equals("client");
+        assert circleClient.getCircleName().equals("client");
 
         Circle circleProspect = new Circle("prospect");
-        assert circleProspect.circleName.equals("prospect");
+        assert circleProspect.getCircleName().equals("prospect");
 
         Circle circleFriend = new Circle("friend");
-        assert circleFriend.circleName.equals("friend");
+        assert circleFriend.getCircleName().equals("friend");
 
         // uppercase valid names (should be normalized to lowercase)
         Circle circleClientUpper = new Circle("CLIENT");
-        assert circleClientUpper.circleName.equals("client");
+        assert circleClientUpper.getCircleName().equals("client");
 
         // mixed case
         Circle circleProspectMixed = new Circle("PrOsPeCt");
-        assert circleProspectMixed.circleName.equals("prospect");
+        assert circleProspectMixed.getCircleName().equals("prospect");
 
         // with whitespace (should be trimmed)
         Circle circleFriendWithSpace = new Circle("  friend  ");
-        assert circleFriendWithSpace.circleName.equals("friend");
+        assert circleFriendWithSpace.getCircleName().equals("friend");
     }
 
     @Test

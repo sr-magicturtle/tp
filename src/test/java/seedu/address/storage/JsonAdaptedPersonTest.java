@@ -170,7 +170,7 @@ public class JsonAdaptedPersonTest {
                         null, null, VALID_CIRCLE);
 
         Person modelPerson = person.toModelType();
-        assertEquals(VALID_CIRCLE, modelPerson.getCircle().get());
+        assertEquals(VALID_CIRCLE, modelPerson.getCircle().get().getCircleName());
     }
 
     @Test

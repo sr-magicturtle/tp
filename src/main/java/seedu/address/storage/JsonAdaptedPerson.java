@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FollowUpDate;
@@ -77,7 +78,7 @@ class JsonAdaptedPerson {
         notes = source.getNotes()
                 .map(Note::toString).orElse(null);
         circle = source.getCircle()
-                .orElse(null);
+                .map(Circle::getCircleName).orElse(null);
     }
 
     /**
@@ -139,13 +140,13 @@ class JsonAdaptedPerson {
                 ? Optional.of(new Note(notes))
                 : Optional.empty();
 
-        Optional<String> modelCircle = Optional.empty();
+        Optional<Circle> modelCircle = Optional.empty();
         if (circle != null) {
             List<String> validCircles = List.of("client", "prospect", "friend");
             if (!validCircles.contains(circle.toLowerCase())) {
                 throw new IllegalValueException("Circle must be one of: client, prospect, friend.");
             }
-            modelCircle = Optional.of(circle.toLowerCase());
+            modelCircle = Optional.of(new Circle(circle.toLowerCase()));
         }
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelFollowUpDate,

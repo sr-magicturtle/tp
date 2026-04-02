@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Person;
 
 public class CircleFilterCommandTest {
@@ -33,7 +34,7 @@ public class CircleFilterCommandTest {
                 personAtIndex0.getTags(),
                 personAtIndex0.getFollowUpDate(),
                 personAtIndex0.getNotes(),
-                Optional.of("client")
+                Optional.of(new Circle("client"))
             );
             model.setPerson(personAtIndex0, personWithClientCircle);
         }
@@ -60,7 +61,7 @@ public class CircleFilterCommandTest {
                 personAtIndex1.getTags(),
                 personAtIndex1.getFollowUpDate(),
                 personAtIndex1.getNotes(),
-                Optional.of("prospect")
+                Optional.of(new Circle("prospect"))
             );
             model.setPerson(personAtIndex1, personWithProspectCircle);
         }
@@ -87,7 +88,7 @@ public class CircleFilterCommandTest {
                 personAtIndex2.getTags(),
                 personAtIndex2.getFollowUpDate(),
                 personAtIndex2.getNotes(),
-                Optional.of("friend")
+                Optional.of(new Circle("friend"))
             );
             model.setPerson(personAtIndex2, personWithFriendCircle);
         }
@@ -140,7 +141,7 @@ public class CircleFilterCommandTest {
                 personAtIndex0.getTags(),
                 personAtIndex0.getFollowUpDate(),
                 personAtIndex0.getNotes(),
-                Optional.of("client")
+                Optional.of(new Circle("client"))
             );
             model.setPerson(personAtIndex0, personWithCircle);
         }
@@ -160,7 +161,7 @@ public class CircleFilterCommandTest {
                     person.getTags(),
                     person.getFollowUpDate(),
                     person.getNotes(),
-                    Optional.of("client")
+                    Optional.of(new Circle("client"))
                 );
                 modelCopy.setPerson(person, personWithCircle);
             }
@@ -189,7 +190,7 @@ public class CircleFilterCommandTest {
                 person.getTags(),
                 person.getFollowUpDate(),
                 person.getNotes(),
-                Optional.of("prospect")
+                Optional.of(new Circle("prospect"))
             );
             model.setPerson(person, personWithCircle);
         }
@@ -219,7 +220,7 @@ public class CircleFilterCommandTest {
                 person.getTags(),
                 person.getFollowUpDate(),
                 person.getNotes(),
-                Optional.of(circles[i])
+                Optional.of(new Circle(circles[i]))
             );
             model.setPerson(person, personWithCircle);
         }
@@ -232,7 +233,7 @@ public class CircleFilterCommandTest {
         // Verify only 'client' circle persons are in filtered list
         for (Person person : filteredList) {
             assertTrue(person.getCircle().isPresent());
-            assertTrue(person.getCircle().get().equals("client"));
+            assertTrue(person.getCircle().get().getCircleName().equals("client"));
         }
     }
 

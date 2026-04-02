@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.PersonCard.setShown;
+
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
@@ -55,10 +58,37 @@ public class PersonDetailPanel extends UiPart<Region> {
                 .map(Note::toString)
                 .orElse("-"));
 
-        followUpDate.setText(person.getFollowUpDate()
-                .map(date -> date.value.toString())
-                .orElse("-"));
+        if (person.getFollowUpDate().isPresent()) {
+            LocalDate date = person.getFollowUpDate().get().value;
+            followUpDate.setText(date.toString());
 
-        circle.setText(person.getCircle().orElse("-"));
+            LocalDate today = LocalDate.now();
+            LocalDate soonThreshold = today.plusDays(3);
+            if (!date.isBefore(today) && !date.isAfter(soonThreshold)) {
+                followUpDate.getStyleClass().add("follow-up-soon");
+            }
+        } else {
+            followUpDate.setText("-");
+        }
+
+        person.getCircle().ifPresentOrElse(c -> {
+            String circ = c.getCircleName().trim().toLowerCase();
+            circle.setText(circ);
+            setShown(circle, true);
+
+            switch (circ) {
+            case "client":
+                circle.getStyleClass().add("circle-client");
+                break;
+            case "prospect":
+                circle.getStyleClass().add("circle-prospect");
+                break;
+            case "friend":
+                circle.getStyleClass().add("circle-friend");
+                break;
+            default:
+                break;
+            }
+        }, () -> setShown(circle, false));
     }
 }

@@ -55,14 +55,14 @@ public class CircleAddCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            java.util.Optional.of(circle.circleName)
+            java.util.Optional.of(circle)
         );
 
         expectedModel.setPerson(personAtIndex, circledPerson);
 
         CircleAddCommand command = new CircleAddCommand(circle, index);
         String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.circleName, circledPerson.getName());
+            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.getCircleName(), circledPerson.getName());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -84,14 +84,14 @@ public class CircleAddCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            java.util.Optional.of(circle.circleName)
+            java.util.Optional.of(circle)
         );
 
         expectedModel.setPerson(personAtIndex, circledPerson);
 
         CircleAddCommand command = new CircleAddCommand(circle, index);
         String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.circleName, circledPerson.getName());
+            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.getCircleName(), circledPerson.getName());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
         // Test friend circle
@@ -110,14 +110,14 @@ public class CircleAddCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            java.util.Optional.of(circle.circleName)
+            java.util.Optional.of(circle)
         );
 
         expectedModel.setPerson(personAtIndex, circledPerson);
 
         command = new CircleAddCommand(circle, index);
         expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.circleName, circledPerson.getName());
+            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.getCircleName(), circledPerson.getName());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -138,14 +138,14 @@ public class CircleAddCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            java.util.Optional.of(circle.circleName)
+            java.util.Optional.of(circle)
         );
 
         expectedModel.setPerson(personAtIndex, circledPerson);
 
         CircleAddCommand command = new CircleAddCommand(circle, lastIndex);
         String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.circleName, circledPerson.getName());
+            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, circle.getCircleName(), circledPerson.getName());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -195,7 +195,7 @@ public class CircleAddCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            java.util.Optional.of(firstCircle.circleName)
+            java.util.Optional.of(firstCircle)
         );
         model.setPerson(personAtIndex, personWithCircle);
 

@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Person;
 
 public class CircleRemoveCommandTest {
@@ -36,7 +37,7 @@ public class CircleRemoveCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            Optional.of("client")
+            Optional.of(new Circle("client"))
         );
         model.setPerson(personAtIndex, personWithCircle);
 
@@ -50,7 +51,7 @@ public class CircleRemoveCommandTest {
             expectedPersonAtIndex.getTags(),
             expectedPersonAtIndex.getFollowUpDate(),
             expectedPersonAtIndex.getNotes(),
-            Optional.of("client")
+            Optional.of(new Circle("client"))
         );
         expectedModel.setPerson(expectedPersonAtIndex, expectedPersonWithCircle);
 
@@ -130,7 +131,7 @@ public class CircleRemoveCommandTest {
             lastPersonAtIndex.getTags(),
             lastPersonAtIndex.getFollowUpDate(),
             lastPersonAtIndex.getNotes(),
-            Optional.of("prospect")
+            Optional.of(new Circle("prospect"))
         );
         model.setPerson(lastPersonAtIndex, lastPersonWithCircle);
 
@@ -144,7 +145,7 @@ public class CircleRemoveCommandTest {
             expectedLastPersonAtIndex.getTags(),
             expectedLastPersonAtIndex.getFollowUpDate(),
             expectedLastPersonAtIndex.getNotes(),
-            Optional.of("prospect")
+            Optional.of(new Circle("prospect"))
         );
         expectedModel.setPerson(expectedLastPersonAtIndex, expectedLastPersonWithCircle);
 
@@ -186,7 +187,7 @@ public class CircleRemoveCommandTest {
                 personAtIndex.getTags(),
                 personAtIndex.getFollowUpDate(),
                 personAtIndex.getNotes(),
-                Optional.of(circleName)
+                Optional.of(new Circle(circleName))
             );
             model.setPerson(personAtIndex, personWithCircle);
 
@@ -220,7 +221,7 @@ public class CircleRemoveCommandTest {
             personAtIndex.getTags(),
             personAtIndex.getFollowUpDate(),
             personAtIndex.getNotes(),
-            Optional.of("client")
+            Optional.of(new Circle("client"))
         );
         model.setPerson(personAtIndex, personWithCircle);
 

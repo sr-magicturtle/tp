@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FollowUpDate;
@@ -31,7 +32,7 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Optional<FollowUpDate> followUpDate;
     private Optional<Note> notes;
-    private Optional<String> circle;
+    private Optional<Circle> circle;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -112,8 +113,8 @@ public class PersonBuilder {
     /**
      * Sets the {@code Note} of the {@code Person} that we are building.
      */
-    public PersonBuilder withNotes(Note note) {
-        this.notes = Optional.of(note);
+    public PersonBuilder withNotes(String note) {
+        this.notes = Optional.of(new Note(note));
         return this;
     }
 
@@ -121,7 +122,7 @@ public class PersonBuilder {
      * Sets the {@code Circle} of the {@code Person} that we are building.
      */
     public PersonBuilder withCircle(String circle) {
-        this.circle = Optional.of(circle);
+        this.circle = Optional.of(new Circle(circle));
         return this;
     }
 

@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
 /**
@@ -28,7 +27,7 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
             .withTags("friends").withFollowUpDate("2026-10-12")
-            .withNotes(new Note("Met at career fair"))
+            .withNotes("Met at career fair")
             .withCircle("client")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
@@ -36,18 +35,18 @@ public class TypicalPersons {
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owes-money", "friends")
             .withFollowUpDate("2026-10-13")
-            .withNotes(new Note("Interested in premium plan"))
+            .withNotes("Interested in premium plan")
             .withCircle("prospect")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
             .withFollowUpDate("2026-10-14")
-            .withNotes(new Note("Referred by Benson"))
+            .withNotes("Referred by Benson")
             .withCircle("friend")
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
-            .withNotes(new Note("Follow up on insurance proposal"))
+            .withNotes("Follow up on insurance proposal")
             .withCircle("prospect")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")

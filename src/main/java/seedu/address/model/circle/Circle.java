@@ -15,7 +15,7 @@ public class Circle {
             + "client, prospect or friend (case-insensitive).";
     private static final Set<String> ALLOWED_CIRCLES = Set.of("client", "prospect", "friend");
 
-    public final String circleName;
+    private final String circleName;
 
     /**
      * Constructs a {@code Circle}.
@@ -26,6 +26,10 @@ public class Circle {
         requireNonNull(circleName);
         checkArgument(isValidCircleName(circleName), MESSAGE_CONSTRAINTS);
         this.circleName = circleName.trim().toLowerCase();
+    }
+
+    public String getCircleName() {
+        return circleName;
     }
 
     /**
