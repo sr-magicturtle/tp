@@ -35,7 +35,7 @@ public class ClearCommand extends Command {
         requireNonNull(model);
 
         if (!confirmationInterface.confirm(
-                "Are you sure you want to clear all contacts ?")) {
+                "ARE YOU SURE YOU WANT TO CLEAR ALL CONTACTS ?")) {
             return new CommandResult(MESSAGE_CLEAR_CANCELLED);
         }
 
