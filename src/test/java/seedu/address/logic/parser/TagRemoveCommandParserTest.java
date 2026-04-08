@@ -1,9 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.TagRemoveCommandParser.MESSAGE_REMOVE_EXCESSIVE_TAGS;
 
 import org.junit.jupiter.api.Test;
@@ -45,8 +45,14 @@ public class TagRemoveCommandParserTest {
     @Test
     public void parse_invalidIndex_failure() {
         TagRemoveCommandParser parser = new TagRemoveCommandParser();
-        assertParseFailure(parser, "abc t/friend", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "0 t/friend", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "0 t/friend", MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void parse_nonNumericalIndex_failure() {
+        TagRemoveCommandParser parser = new TagRemoveCommandParser();
+        assertParseFailure(parser, "abc t/friend",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagRemoveCommand.MESSAGE_USAGE));
     }
 
     @Test
