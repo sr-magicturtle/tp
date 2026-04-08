@@ -252,22 +252,24 @@ Adds a note to an existing person in the address book.
 
 Format: `note INDEX note/NOTE`
 
-* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* Any note to be added cannot exceed 1000 characters in length.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Warning:**
-Notes that exceed 1000 characters (including newline separators) will be rejected.
-</div>
-
-* The 1000-character limit also applied for the total length of notes for each person. This is to ensure readability and prevent excessively long notes.
-* After adding the first note, subsequent notes will be appended to existing notes with a pipe ` | `which also counts toward the 1000-character limit.
+* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the 
+displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * All text after `note/` will be treated as content for the note, including spaces and slashes.
 * Blank notes (i.e. `note/` without any text after it) will not be added.
 * Notes will only show up after running `view`.
+* Each note entry and the total combined notes per person is limited to ***1000 characters***.
+    This is to ensure readability and prevent excessively long notes.
+* After adding the first note, subsequent notes will be appended with a pipe ` | `
+  which also counts toward the 1000-character limit.
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Warning:**
+Notes that exceed the 1000 characters limit will be rejected.
+</div>
 
 Examples:
-* `note 1 note/Family of four, looking for family coverage` adds the note `Family of four, looking for family coverage` to the 1st person in the list.
-* `note 1 note/A note/B note/C` adds the note `A note/B note/C` to the 1st person in the list. 
+* `note 1 note/Family of four, looking for family coverage` adds `Family of four, looking for family coverage`
+to the 1st person in the list.
+* `note 2 note/A note/B note/C` adds `A note/B note/C` to the 2nd person in the list. 
 
 ### Clear a person's notes : `noteclear`
 
