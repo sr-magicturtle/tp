@@ -1,11 +1,13 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.HashSet;
-import java.util.Set;
+import static seedu.address.testutil.TypicalTags.COLLEAGUE;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,29 +19,23 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for TagRemoveCommand.
+ */
 public class TagRemoveCommandTest {
+
     @Test
     public void execute_validIndexAndExistingTag_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        Index index = Index.fromOneBased(1);
+        Person personToRemoveTagFrom = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Tag existingTag = personToRemoveTagFrom.getTags().iterator().next();
 
-        // Get an existing tag from the first person to ensure removal works
-        Person personToEdit = model.getFilteredPersonList().get(index.getZeroBased());
-        Tag existingTag = personToEdit.getTags().iterator().next();
+        Person editedPerson = personToRemoveTagFrom.removeTag(existingTag);
+        expectedModel.setPerson(personToRemoveTagFrom, editedPerson);
 
-        Set<Tag> updatedTags = new HashSet<>(personToEdit.getTags());
-        updatedTags.remove(existingTag);
-        Person editedPerson = new Person(
-                personToEdit.getName(), personToEdit.getPhone(),
-                personToEdit.getEmail(), personToEdit.getAddress(), updatedTags,
-                personToEdit.getFollowUpDate(),
-                personToEdit.getNotes(),
-                personToEdit.getCircle());
-        expectedModel.setPerson(personToEdit, editedPerson);
-
-        TagRemoveCommand command = new TagRemoveCommand(existingTag, index);
+        TagRemoveCommand command = new TagRemoveCommand(INDEX_FIRST_PERSON, existingTag);
         String expectedMessage = String.format(
                 TagRemoveCommand.MESSAGE_REMOVE_TAG_SUCCESS, existingTag.tagName, editedPerson.getName());
 
@@ -51,11 +47,67 @@ public class TagRemoveCommandTest {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        Tag tag = new Tag("friends");
 
-        TagRemoveCommand command = new TagRemoveCommand(tag, outOfBoundIndex);
+        TagRemoveCommand command = new TagRemoveCommand(outOfBoundIndex, COLLEAGUE);
 
         assertThrows(CommandException.class,
                 TagRemoveCommand.MESSAGE_INVALID_PERSON, () -> command.execute(model));
+    }
+
+    @Test
+    public void execute_tagNotPresentOnPerson_throwsCommandException() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Tag tagNotPresent = new Tag("nonexistent-tag");
+
+        TagRemoveCommand command = new TagRemoveCommand(INDEX_FIRST_PERSON, tagNotPresent);
+
+        assertThrows(CommandException.class,
+                TagRemoveCommand.MESSAGE_REMOVE_TAG_FAILURE, () -> command.execute(model));
+    }
+
+    @Test
+    public void execute_lastPersonValidTag_success() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        Index testIndex = INDEX_SECOND_PERSON;
+        Person personToRemoveTagFrom = model.getFilteredPersonList().get(testIndex.getZeroBased());
+        Tag existingTag = personToRemoveTagFrom.getTags().iterator().next();
+
+        Person editedPerson = personToRemoveTagFrom.removeTag(existingTag);
+        expectedModel.setPerson(personToRemoveTagFrom, editedPerson);
+
+        TagRemoveCommand command = new TagRemoveCommand(testIndex, existingTag);
+        String expectedMessage = String.format(
+                TagRemoveCommand.MESSAGE_REMOVE_TAG_SUCCESS, existingTag.tagName, editedPerson.getName());
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        TagRemoveCommand tagRemoveFirstCommand = new TagRemoveCommand(INDEX_FIRST_PERSON, COLLEAGUE);
+        TagRemoveCommand tagRemoveSecondCommand = new TagRemoveCommand(INDEX_SECOND_PERSON, COLLEAGUE);
+
+        // same object -> returns true
+        assertTrue(tagRemoveFirstCommand.equals(tagRemoveFirstCommand));
+
+        // same values -> returns true
+        TagRemoveCommand tagRemoveFirstCommandCopy = new TagRemoveCommand(INDEX_FIRST_PERSON, COLLEAGUE);
+        assertTrue(tagRemoveFirstCommand.equals(tagRemoveFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(tagRemoveFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(tagRemoveFirstCommand.equals(null));
+
+        // different index -> returns false
+        assertFalse(tagRemoveFirstCommand.equals(tagRemoveSecondCommand));
+
+        // different tag -> returns false
+        Tag differentTag = new Tag("friend");
+        TagRemoveCommand tagRemoveDifferentTag = new TagRemoveCommand(INDEX_FIRST_PERSON, differentTag);
+        assertFalse(tagRemoveFirstCommand.equals(tagRemoveDifferentTag));
     }
 }

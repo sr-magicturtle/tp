@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.TagUtil.createTagNode;
+
 import java.time.LocalDate;
 import java.util.Comparator;
 
@@ -56,8 +58,8 @@ public class PersonCard extends UiPart<Region> {
         String emailValue = person.getEmail().value;
 
         phone.setText("Phone: " + person.getPhone().value);
-        address.setText("Address: " + (addressValue.equals("MISSING_ADDRESS") ? "-" : addressValue));
-        email.setText(emailValue.equals("missing@email.empty") ? "-" : emailValue);
+        address.setText("Address: " + (person.isDefaultAddress() ? "-" : addressValue));
+        email.setText(person.isDefaultEmail() ? "-" : emailValue);
 
         email.getStyleClass().removeAll("person-email-link", "person-field-empty");
 
@@ -112,7 +114,7 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .limit(5)
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> tags.getChildren().add(createTagNode(tag.tagName)));
     }
 
     public static void setShown(Node node, boolean shown) {

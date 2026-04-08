@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CircleAddCommand;
 import seedu.address.logic.commands.CircleFilterCommand;
@@ -109,13 +108,7 @@ public class AddressBookParser {
             return new NoteAddCommandParser().parse(arguments);
 
         case NoteClearCommand.COMMAND_WORD:
-            try {
-                return new NoteClearCommand(ParserUtil.parseIndex(arguments.trim()));
-            } catch (ParseException pe) {
-                throw new ParseException(
-                        String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                                NoteClearCommand.MESSAGE_USAGE), pe);
-            }
+            return new NoteClearCommandParser().parse(arguments);
 
         case CircleAddCommand.COMMAND_WORD:
             return new CircleAddCommandParser().parse(arguments);

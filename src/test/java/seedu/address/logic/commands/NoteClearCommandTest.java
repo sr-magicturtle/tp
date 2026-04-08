@@ -87,7 +87,7 @@ public class NoteClearCommandTest {
     public void execute_invalidIndex_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         NoteClearCommand command = new NoteClearCommand(outOfBoundIndex);
-        assertCommandFailure(command, model, NoteClearCommand.MESSAGE_INVALID_PERSON);
+        assertCommandFailure(command, model, NoteClearCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test

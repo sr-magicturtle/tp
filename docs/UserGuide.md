@@ -28,8 +28,8 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
     * [Note Add](#add-notes-to-a-person--note)
     * [Note Clear](#clear-a-persons-notes--noteclear)
     * [Circle Add](#add-a-circle-to-a-person--circleadd)
-    * [Circle Remove](#removing-a-circle-to-a-person--circlerm)
-    * [Circle Filter](#filtering-circle--circlefilter)
+    * [Circle Remove](#remove-a-circle-from-a-person--circlerm)
+    * [Circle Filter](#filter-for-a-circle--circlefilter)
     * [Follow Up Date](#setting-follow-up-date--followup)
     * [Clear Follow-Up Date](#clearing-a-follow-up-date--followupclear)
     * [Remind](#listing-upcoming-follow-ups--remind)
@@ -147,8 +147,22 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [d/FOLLO
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e. adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
+
+<details markdown="block">
+<summary><strong>Editing Tags</strong></summary>
+
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can input multiple tags under the `edit` command, each separate tag should have a prefix `t/`
+
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Warning:**
+When editing tags, you must specify all the tags that the person should have after the edit. Any existing tag will be replaced by the set of new tags inputted under `edit`
+
+**Example:**
+A contact has 2 tags `friend` and `colleague` initially. After you run `edit 1 t/friend t/cafe`, only the tags `friend` and `cafe` will be displayed.
+</div>
+
+</details>
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com c/friend` Edits the phone number, email address and circle of the 1st
@@ -218,14 +232,15 @@ Examples:
 
 ### Adding a tag : `tagadd`
 
-Adds a tag to an existing person in the address book.
+Adds a tag to an existing person in the address book at a time.
 
 Format: `tagadd INDEX t/TAG`
 
 * Adds a tag to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Only 1 tag can be added at a time. `t/tag t/tag2 ` will not work.
 * Creates the tag if it does not already exist.
 * If the tag exists, the addition of the tag will not be allowed.
-* Only 1 tag can be added at a time.
+* A person can have maximum 5 number of tags. If the person already has 5 tags, any additional tag will not be added.
 
 Examples:
 * `tagadd 1 t/friend` adds the tag `friend` to the 1st person in the address book.
@@ -233,11 +248,12 @@ Examples:
 
 ### Removing a tag : `tagrm`
 
-Removes a tag from an existing person in the address book.
+Removes a tag from an existing person in the address book at a time.
 
 Format: `tagrm INDEX t/TAG`
 
 * Removes a tag from the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Only 1 tag can be removed at a time. `t/tag t/tag2 ` will not work.
 * Removes the tag if it exists for the person.
 * If the tag does not exist, the deletion of the tag will not be allowed.
 * Only 1 tag can be removed at a time.
@@ -252,22 +268,24 @@ Adds a note to an existing person in the address book.
 
 Format: `note INDEX note/NOTE`
 
-* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* Any note to be added cannot exceed 1000 characters in length.
+* Adds a note to the person at the specified `INDEX`. The index refers to the index number shown in the 
+displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* All text after `note/` will be treated as content for the note, including spaces and slashes.
+* Blank notes (i.e. `note/` without any text after it) will not be added.
+* Notes will only show up after running `view`.
+* Each note entry and the total combined notes per person is limited to ***1000 characters***.
+    This is to ensure readability and prevent excessively long notes.
+* After adding the first note, subsequent notes will be appended with a pipe ` | `
+  which also counts toward the 1000-character limit.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Warning:**
-Notes that exceed 1000 characters (including newline separators) will be rejected.
+Notes that exceed the 1000 characters limit will be rejected.
 </div>
 
-* The 1000-character limit also applied for the total length of notes for each person. This is to ensure readability and prevent excessively long notes.
-* After adding the first note, additional notes will be appended to existing notes of the person.
-* Each added note is separated by a newline, which also counts toward the 1000-character limit.
-* Blank notes (i.e. `note/` without any text after it) will not be added.
-* When viewing a person, each note will be shown in a new line.
-
 Examples:
-* `note 1 note/Family of four, looking for family coverage` adds the note `Family of four, looking for family coverage` to the 1st person in the list.
-
+* `note 1 note/Family of four, looking for family coverage` adds `Family of four, looking for family coverage`
+to the 1st person in the list.
+* `note 2 note/A note/B note/C` adds `A note/B note/C` to the 2nd person in the list. 
 
 ### Clear a person's notes : `noteclear`
 

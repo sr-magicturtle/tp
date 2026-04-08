@@ -27,8 +27,25 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        fullName = name;
+        String capitalizedName = capitalizeName(name);
+        checkArgument(isValidName(capitalizedName), MESSAGE_CONSTRAINTS);
+        fullName = capitalizedName;
+    }
+
+    /**
+     * Capitalizes the first letter of each word in the name and lowercases the rest.
+     */
+    private static String capitalizeName(String name) {
+        String[] words = name.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(word.substring(0, 1).toUpperCase())
+                        .append(word.substring(1).toLowerCase())
+                        .append(" ");
+            }
+        }
+        return sb.toString().trim();
     }
 
     /**

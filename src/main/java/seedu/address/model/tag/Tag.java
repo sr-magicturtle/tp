@@ -10,10 +10,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Tags must be 1-20 characters, contain only lowercase letters, numbers, or hyphens, "
-                    + "and must not contain spaces.";
+            "Tags must be 1-20 characters, contain only letters, numbers, or hyphens, "
+                    + "and must not contain spaces (case-insensitive).";
 
-    public static final String VALIDATION_REGEX = "[a-z0-9-]{1,20}";
+    public static final String VALIDATION_REGEX = "[a-zA-Z0-9-]{1,20}";
 
     public final String tagName;
 
@@ -25,7 +25,7 @@ public class Tag {
     public Tag(String tagName) {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
+        this.tagName = tagName.trim().toLowerCase();
     }
 
     /**

@@ -162,10 +162,10 @@
 
 #tags .label {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-    -fx-padding: 8 18 8 18;
-    -fx-background-radius: 18;
-    -fx-border-radius: 18;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
     -fx-font-size: 12px;
     -fx-font-family: "Segoe UI Semibold";
 }

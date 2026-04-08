@@ -21,34 +21,39 @@ public class NoteAddCommandParser implements Parser<NoteAddCommand> {
     @Override
     public NoteAddCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
 
-        // 1. Check if note/ prefix is present FIRST — format validation takes priority
-        if (argMultimap.getValue(PREFIX_NOTE).isEmpty()) {
+        int notePrefixPosition = args.indexOf(PREFIX_NOTE.toString());
+
+        // Verify the presence of "note/" first
+        if (notePrefixPosition == -1) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteAddCommand.MESSAGE_USAGE));
         }
 
-        // 2. Now validate the index
-        String preamble = argMultimap.getPreamble().trim();
+        // preamble is everything before "note/"
+        // noteText is everything after "note/"
+        String preamble = args.substring(0, notePrefixPosition).trim();
+        String noteText = args.substring(notePrefixPosition + PREFIX_NOTE.toString().length()).trim();
+
+        // Then validate the index
         int rawInt;
         try {
             rawInt = Integer.parseInt(preamble);
         } catch (NumberFormatException e) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteAddCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteAddCommand.MESSAGE_USAGE));
         }
 
+        // if index is present but out of range
         if (rawInt <= 0) {
-            throw new ParseException(MESSAGE_INVALID_INDEX); // index is present but out of range
+            throw new ParseException(MESSAGE_INVALID_INDEX);
         }
-
-        String noteText = argMultimap.getValue(PREFIX_NOTE).get().trim();
 
         // Validate note is not empty
         if (noteText.isEmpty()) {
             throw new ParseException(MESSAGE_CONSTRAINTS);
         }
+
         Index index = Index.fromOneBased(rawInt);
 
         // Validate the word count of the new input is <= MAX_CHAR_COUNT

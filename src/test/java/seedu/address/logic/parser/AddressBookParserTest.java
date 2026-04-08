@@ -29,10 +29,13 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemindCommand;
 import seedu.address.logic.commands.SetFollowUpCommand;
+import seedu.address.logic.commands.TagAddCommand;
+import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FollowUpDate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -146,4 +149,19 @@ public class AddressBookParserTest {
         assertEquals(new CircleFilterCommand(FRIENDS.getCircleName()), command);
     }
 
+    @Test
+    public void parseCommand_tagadd() throws Exception {
+        TagAddCommand command = (TagAddCommand) parser.parseCommand(
+            TagAddCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_PERSON.getOneBased() + " t/friend");
+        assertEquals(new TagAddCommand(INDEX_FIRST_PERSON, new Tag("friend")), command);
+    }
+
+    @Test
+    public void parseCommand_tagrm() throws Exception {
+        TagRemoveCommand command = (TagRemoveCommand) parser.parseCommand(
+            TagRemoveCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_PERSON.getOneBased() + " t/friend");
+        assertEquals(new TagRemoveCommand(INDEX_FIRST_PERSON, new Tag("friend")), command);
+    }
 }

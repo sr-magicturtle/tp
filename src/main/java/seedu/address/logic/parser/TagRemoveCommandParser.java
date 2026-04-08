@@ -33,6 +33,6 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
         Index index = ParserUtil.parseIndex(argMultimap.getPreamble().trim());
         Tag tag = ParserUtil.parseTag(argMultimap.getValue(PREFIX_TAG).get());
 
-        return new TagRemoveCommand(tag, index);
+        return new TagRemoveCommand(index, tag);
     }
 }

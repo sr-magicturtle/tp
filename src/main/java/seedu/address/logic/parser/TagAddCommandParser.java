@@ -33,6 +33,6 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
         Index index = ParserUtil.parseIndex(argMultimap.getPreamble().trim());
         Tag tag = ParserUtil.parseTag(argMultimap.getValue(PREFIX_TAG).get());
 
-        return new TagAddCommand(tag, index);
+        return new TagAddCommand(index, tag);
     }
 }
