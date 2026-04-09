@@ -57,6 +57,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists.";
+    public static final String MESSAGE_TAG_LIMIT_EXCEEDED = "A contact can have at most "
+            + Tag.MAX_TAGS_PER_PERSON + " tags.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -88,6 +90,11 @@ public class EditCommand extends Command {
 
         if (personToEdit.equals(editedPerson)) {
             throw new CommandException(MESSAGE_NOT_EDITED);
+        }
+
+        // Validate tag limit
+        if (editedPerson.getTags().size() > Tag.MAX_TAGS_PER_PERSON) {
+            throw new CommandException(MESSAGE_TAG_LIMIT_EXCEEDED);
         }
 
         if (model.hasPersonExcluding(editedPerson, personToEdit)) {
