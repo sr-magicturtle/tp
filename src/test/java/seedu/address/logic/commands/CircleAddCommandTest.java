@@ -15,6 +15,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -131,7 +132,7 @@ public class CircleAddCommandTest {
         CircleAddCommand command = new CircleAddCommand(outOfBoundIndex, CLIENTS);
 
         assertThrows(CommandException.class,
-            CircleAddCommand.MESSAGE_INVALID_PERSON, () -> command.execute(model));
+            Messages.MESSAGE_OOR_INDEX, () -> command.execute(model));
     }
 
     @Test
@@ -143,7 +144,7 @@ public class CircleAddCommandTest {
         CircleAddCommand command = new CircleAddCommand(invalidIndex, FRIENDS);
 
         assertThrows(CommandException.class,
-            CircleAddCommand.MESSAGE_INVALID_PERSON, () -> command.execute(model));
+            Messages.MESSAGE_OOR_INDEX, () -> command.execute(model));
     }
 
     @Test

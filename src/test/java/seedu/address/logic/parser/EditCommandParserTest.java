@@ -80,12 +80,6 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
@@ -97,6 +91,15 @@ public class EditCommandParserTest {
 
         // valid prefix followed by invalid prefix with more characters
         assertParseFailure(parser, "1 p/12345678 h/whatsthat", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_indexOutOfRange_failure() {
+        // negative index
+        assertParseFailure(parser, "-5" + NAME_DESC_AMY, Messages.MESSAGE_OOR_INDEX);
+
+        // zero index
+        assertParseFailure(parser, "0" + NAME_DESC_AMY, Messages.MESSAGE_OOR_INDEX);
     }
 
     @Test

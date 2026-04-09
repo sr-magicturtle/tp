@@ -55,7 +55,7 @@ public class NoteAddCommandTest {
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         NoteAddCommand command = new NoteAddCommand(outOfBoundIndex, new Note(NOTE_STUB));
-        assertCommandFailure(command, model, NoteAddCommand.MESSAGE_INVALID_INDEX);
+        assertCommandFailure(command, model, Messages.MESSAGE_OOR_INDEX);
     }
 
     @Test

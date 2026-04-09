@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -46,7 +47,7 @@ public class CircleRemoveCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON);
+            throw new CommandException(Messages.MESSAGE_OOR_INDEX);
         }
 
         Person personAtIndex = lastShownList.get(index.getZeroBased());

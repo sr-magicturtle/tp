@@ -17,6 +17,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -53,7 +54,7 @@ public class CircleRemoveCommandTest {
         CircleRemoveCommand command = new CircleRemoveCommand(outOfBoundIndex);
 
         assertThrows(CommandException.class,
-            CircleRemoveCommand.MESSAGE_INVALID_PERSON, () -> command.execute(model));
+                Messages.MESSAGE_OOR_INDEX, () -> command.execute(model));
     }
 
     @Test

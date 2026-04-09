@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Address;
@@ -23,6 +24,26 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    /**
+     * Parses {@code oneBasedIndex} into an {@link Index}.
+     * Throws a format error (wrapping {@code usageMessage}) if the input is not an integer,
+     * or an OOR error if the integer is non-positive / overflows.
+     */
+    public static Index parseIndex(String oneBasedIndex, String usageMessage) throws ParseException {
+        String trimmed = oneBasedIndex.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmed)) {
+            // non-numeric → Invalid command format
+            // numeric but negative or too high → OOR error
+            try {
+                long val = Long.parseLong(trimmed);
+                throw new ParseException(Messages.MESSAGE_OOR_INDEX);
+            } catch (NumberFormatException e) {
+                throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, usageMessage));
+            }
+        }
+        return Index.fromOneBased(Integer.parseInt(trimmed));
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be

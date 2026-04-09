@@ -56,7 +56,7 @@ public class TagAddCommandTest {
         TagAddCommand command = new TagAddCommand(outOfBoundIndex, CLASSMATE);
 
         assertThrows(CommandException.class,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () -> command.execute(model));
+                Messages.MESSAGE_OOR_INDEX, () -> command.execute(model));
     }
 
     @Test

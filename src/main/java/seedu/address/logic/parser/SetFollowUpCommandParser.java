@@ -31,8 +31,8 @@ public class SetFollowUpCommandParser implements Parser<SetFollowUpCommand> {
 
         // Reuse shared duplicate-prefix validation logic
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FOLLOW_UP_DATE);
+        Index index = ParserUtil.parseIndex(argMultimap.getPreamble().trim(), SetFollowUpCommand.MESSAGE_USAGE);
 
-        Index index = ParserUtil.parseIndex(argMultimap.getPreamble().trim());
         FollowUpDate followUpDate = ParserUtil.parseFollowUpDate(
                 argMultimap.getValue(PREFIX_FOLLOW_UP_DATE).get());
 

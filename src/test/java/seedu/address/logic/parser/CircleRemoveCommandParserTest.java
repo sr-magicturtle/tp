@@ -3,11 +3,11 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CircleRemoveCommand;
 
 public class CircleRemoveCommandParserTest {
@@ -47,35 +47,39 @@ public class CircleRemoveCommandParserTest {
     }
 
     @Test
-    public void parse_invalidIndex_failure() {
+    public void parse_indexOutOfRange_failure() {
         // zero index (not allowed)
-        assertParseFailure(parser, "0", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "0", Messages.MESSAGE_OOR_INDEX);
 
         // negative index
-        assertParseFailure(parser, "-1", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "-10", MESSAGE_INVALID_INDEX);
-
-        // non-integer index
-        assertParseFailure(parser, "abc", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "xyz", MESSAGE_INVALID_INDEX);
-
-        // decimal index
-        assertParseFailure(parser, "1.5", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "3.14", MESSAGE_INVALID_INDEX);
-
-        // index with letters mixed in
-        assertParseFailure(parser, "1a", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "a1", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "1a2", MESSAGE_INVALID_INDEX);
-
-        // very large index (beyond integer range)
-        assertParseFailure(parser, "99999999999999999999", MESSAGE_INVALID_INDEX);
-
-        // scientific notation
-        assertParseFailure(parser, "1e10", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "-1", Messages.MESSAGE_OOR_INDEX);
+        assertParseFailure(parser, "-10", Messages.MESSAGE_OOR_INDEX);
 
         // leading plus sign
-        assertParseFailure(parser, "+1", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "+1", Messages.MESSAGE_OOR_INDEX);
+    }
+
+    @Test
+    public void parse_nonNumericalIndexes_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CircleRemoveCommand.MESSAGE_USAGE);
+        // non-integer index
+        assertParseFailure(parser, "abc", expectedMessage);
+        assertParseFailure(parser, "xyz", expectedMessage);
+
+        // index with letters mixed in
+        assertParseFailure(parser, "1a", expectedMessage);
+        assertParseFailure(parser, "a1", expectedMessage);
+        assertParseFailure(parser, "1a2", expectedMessage);
+
+        // scientific notation
+        assertParseFailure(parser, "1e10", expectedMessage);
+
+        // decimal index
+        assertParseFailure(parser, "1.5", expectedMessage);
+        assertParseFailure(parser, "3.14", expectedMessage);
+
+        // very large index (beyond integer range)
+        assertParseFailure(parser, "99999999999999999999", expectedMessage);
     }
 
     @Test
@@ -106,12 +110,14 @@ public class CircleRemoveCommandParserTest {
 
     @Test
     public void parse_specialCharacters_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CircleRemoveCommand.MESSAGE_USAGE);
+
         // special characters as index
-        assertParseFailure(parser, "@", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "#", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "$", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "%", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "!", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "@", expectedMessage);
+        assertParseFailure(parser, "#", expectedMessage);
+        assertParseFailure(parser, "$", expectedMessage);
+        assertParseFailure(parser, "%", expectedMessage);
+        assertParseFailure(parser, "!", expectedMessage);
     }
 
     @Test

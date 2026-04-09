@@ -31,7 +31,6 @@ public class TagAddCommand extends Command {
             + Tag.MAX_TAGS_PER_PERSON + " tags.";
     public static final String MESSAGE_TAG_PERSON_SUCCESS = "Added tag '%1$s' to %2$s";
     public static final String MESSAGE_TAG_PERSON_FAILURE = "Invalid value: tag already exists for this contact.";
-    public static final String MESSAGE_INVALID_PERSON = "The person does not exist in the address book.";
 
     private static final Logger logger = LogsCenter.getLogger(TagAddCommand.class);
 
@@ -60,7 +59,7 @@ public class TagAddCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_OOR_INDEX);
         }
 
         Person personAtIndex = lastShownList.get(index.getZeroBased());

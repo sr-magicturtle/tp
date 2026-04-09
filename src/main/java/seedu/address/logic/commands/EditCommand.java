@@ -82,7 +82,7 @@ public class EditCommand extends Command {
         int zeroBasedIndex = index.getZeroBased();
 
         if (zeroBasedIndex >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_OOR_INDEX);
         }
 
         Person personToEdit = lastShownList.get(zeroBasedIndex);
