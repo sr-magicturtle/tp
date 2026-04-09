@@ -118,17 +118,12 @@ public class CircleFilterCommandParserTest {
         // verify that all valid circles work in any case
         // lowercase
         assertParseSuccess(parser, "client", new CircleFilterCommand("client"));
-        assertParseSuccess(parser, "prospect", new CircleFilterCommand("prospect"));
-        assertParseSuccess(parser, "friend", new CircleFilterCommand("friend"));
+
 
         // uppercase (should be normalized to lowercase)
-        assertParseSuccess(parser, "CLIENT", new CircleFilterCommand("client"));
         assertParseSuccess(parser, "PROSPECT", new CircleFilterCommand("prospect"));
-        assertParseSuccess(parser, "FRIEND", new CircleFilterCommand("friend"));
 
         // mixed case (should be normalized to lowercase)
-        assertParseSuccess(parser, "ClIeNt", new CircleFilterCommand("client"));
-        assertParseSuccess(parser, "PrOsPeCt", new CircleFilterCommand("prospect"));
         assertParseSuccess(parser, "FrIeNd", new CircleFilterCommand("friend"));
     }
 

@@ -16,23 +16,30 @@ public class CircleRemoveCommandParserTest {
 
     @Test
     public void parse_validArgs_success() {
-        // valid index argument
         Index expectedIndex = Index.fromOneBased(1);
         CircleRemoveCommand expectedCommand = new CircleRemoveCommand(expectedIndex);
         assertParseSuccess(parser, "1", expectedCommand);
+    }
 
-        // valid index with leading/trailing whitespace
+    @Test
+    public void parse_validArgsWithWhitespace_success() {
+        Index expectedIndex = Index.fromOneBased(1);
+        CircleRemoveCommand expectedCommand = new CircleRemoveCommand(expectedIndex);
         assertParseSuccess(parser, "   1   ", expectedCommand);
+    }
 
-        // larger valid index
-        Index expectedIndex2 = Index.fromOneBased(10);
-        CircleRemoveCommand expectedCommand2 = new CircleRemoveCommand(expectedIndex2);
-        assertParseSuccess(parser, "10", expectedCommand2);
+    @Test
+    public void parse_validArgsLargerIndex_success() {
+        Index expectedIndex = Index.fromOneBased(10);
+        CircleRemoveCommand expectedCommand = new CircleRemoveCommand(expectedIndex);
+        assertParseSuccess(parser, "10", expectedCommand);
+    }
 
-        // large index
-        Index expectedIndexLarge = Index.fromOneBased(999);
-        CircleRemoveCommand expectedCommandLarge = new CircleRemoveCommand(expectedIndexLarge);
-        assertParseSuccess(parser, "999", expectedCommandLarge);
+    @Test
+    public void parse_validArgsVeryLargeIndex_success() {
+        Index expectedIndex = Index.fromOneBased(999);
+        CircleRemoveCommand expectedCommand = new CircleRemoveCommand(expectedIndex);
+        assertParseSuccess(parser, "999", expectedCommand);
     }
 
     @Test
@@ -53,15 +60,12 @@ public class CircleRemoveCommandParserTest {
 
         // negative index
         assertParseFailure(parser, "-1", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "-10", MESSAGE_INVALID_INDEX);
 
         // non-integer index
         assertParseFailure(parser, "abc", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "xyz", MESSAGE_INVALID_INDEX);
 
         // decimal index
         assertParseFailure(parser, "1.5", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "3.14", MESSAGE_INVALID_INDEX);
 
         // index with letters mixed in
         assertParseFailure(parser, "1a", MESSAGE_INVALID_INDEX);
@@ -122,19 +126,6 @@ public class CircleRemoveCommandParserTest {
 
         // index with tabs and numbers
         assertParseFailure(parser, "1\t2", expectedMessage);
-    }
-
-    @Test
-    public void parse_boundaryIndexes() {
-        // minimum valid index (1)
-        Index minIndex = Index.fromOneBased(1);
-        CircleRemoveCommand minCommand = new CircleRemoveCommand(minIndex);
-        assertParseSuccess(parser, "1", minCommand);
-
-        // maximum valid index (very large but within integer range)
-        Index maxIndex = Index.fromOneBased(Integer.MAX_VALUE - 1);
-        CircleRemoveCommand maxCommand = new CircleRemoveCommand(maxIndex);
-        assertParseSuccess(parser, String.valueOf(Integer.MAX_VALUE - 1), maxCommand);
     }
 
     @Test

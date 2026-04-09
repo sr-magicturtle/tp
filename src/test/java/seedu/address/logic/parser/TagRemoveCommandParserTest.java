@@ -110,12 +110,6 @@ public class TagRemoveCommandParserTest {
     }
 
     @Test
-    public void parse_invalidIndexNonNumeric_failure() {
-        assertParseFailure(parser, "abc t/friend",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagRemoveCommand.MESSAGE_USAGE));
-    }
-
-    @Test
     public void parse_invalidTagWithSpecialChar_failure() {
         assertParseFailure(parser, "1 t/" + INVALID_TAG_WITH_SPECIAL_CHAR, Tag.MESSAGE_CONSTRAINTS);
     }

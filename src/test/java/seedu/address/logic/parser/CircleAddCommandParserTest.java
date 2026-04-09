@@ -18,28 +18,35 @@ public class CircleAddCommandParserTest {
 
     @Test
     public void parse_validArgs_success() {
-        // valid arguments with lowercase circle name
         Circle expectedCircle = new Circle("client");
         Index expectedIndex = Index.fromOneBased(1);
         CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
 
         assertParseSuccess(parser, "1 c/client", expectedCommand);
+    }
 
-        // valid arguments with uppercase circle name (should be normalized)
-        Circle expectedCircleUpper = new Circle("CLIENT");
-        CircleAddCommand expectedCommandUpper = new CircleAddCommand(expectedIndex, expectedCircleUpper);
-        assertParseSuccess(parser, "1 c/CLIENT", expectedCommandUpper);
+    @Test
+    public void parse_validArgsUppercase_success() {
+        Circle expectedCircle = new Circle("CLIENT");
+        Index expectedIndex = Index.fromOneBased(1);
+        CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
+        assertParseSuccess(parser, "1 c/CLIENT", expectedCommand);
+    }
 
-        // valid arguments with mixed case
-        Circle expectedCircleMixed = new Circle("ProSpect");
-        Index expectedIndex2 = Index.fromOneBased(2);
-        CircleAddCommand expectedCommandMixed = new CircleAddCommand(expectedIndex2, expectedCircleMixed);
-        assertParseSuccess(parser, "2 c/ProSpect", expectedCommandMixed);
+    @Test
+    public void parse_validArgsMixedCase_success() {
+        Circle expectedCircle = new Circle("ProSpect");
+        Index expectedIndex = Index.fromOneBased(2);
+        CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
+        assertParseSuccess(parser, "2 c/ProSpect", expectedCommand);
+    }
 
-        // valid arguments with leading/trailing whitespace
-        Circle expectedCircleFriend = new Circle("friend");
-        CircleAddCommand expectedCommandFriend = new CircleAddCommand(expectedIndex, expectedCircleFriend);
-        assertParseSuccess(parser, "   1   c/friend   ", expectedCommandFriend);
+    @Test
+    public void parse_validArgsWithWhitespace_success() {
+        Circle expectedCircle = new Circle("friend");
+        Index expectedIndex = Index.fromOneBased(1);
+        CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
+        assertParseSuccess(parser, "   1   c/friend   ", expectedCommand);
     }
 
     @Test

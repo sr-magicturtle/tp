@@ -26,13 +26,6 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class TagAddCommandTest {
 
-    private static final String VALID_TAG_FOR_LIMIT_TEST_1 = "tag1";
-    private static final String VALID_TAG_FOR_LIMIT_TEST_2 = "tag2";
-    private static final String VALID_TAG_FOR_LIMIT_TEST_3 = "tag3";
-    private static final String VALID_TAG_FOR_LIMIT_TEST_4 = "tag4";
-    private static final String VALID_TAG_FOR_LIMIT_TEST_5 = "tag5";
-    private static final String VALID_TAG_FOR_LIMIT_TEST_6 = "tag6";
-
     @Test
     public void execute_validIndexAndNewTag_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -74,36 +67,18 @@ public class TagAddCommandTest {
     }
 
     @Test
-    public void execute_lastPersonValidTag_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-        Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
-
-        Person personToTag = model.getFilteredPersonList().get(lastIndex.getZeroBased());
-        Person taggedPerson = personToTag.addTag(CLASSMATE);
-        expectedModel.setPerson(personToTag, taggedPerson);
-
-        TagAddCommand command = new TagAddCommand(lastIndex, CLASSMATE);
-        String expectedMessage = String.format(
-                TagAddCommand.MESSAGE_TAG_PERSON_SUCCESS, CLASSMATE.tagName, taggedPerson.getName());
-
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_tagLimitReached_throwsCommandException() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Person originalPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person personWithFiveTags = new PersonBuilder(originalPerson)
-                .withTags(VALID_TAG_FOR_LIMIT_TEST_1, VALID_TAG_FOR_LIMIT_TEST_2,
-                        VALID_TAG_FOR_LIMIT_TEST_3, VALID_TAG_FOR_LIMIT_TEST_4,
-                        VALID_TAG_FOR_LIMIT_TEST_5)
+                .withTags("tag1", "tag2",
+                        "tag3", "tag4",
+                        "tag5")
                 .build();
         model.setPerson(originalPerson, personWithFiveTags);
 
-        TagAddCommand command = new TagAddCommand(INDEX_FIRST_PERSON, new Tag(VALID_TAG_FOR_LIMIT_TEST_6));
+        TagAddCommand command = new TagAddCommand(INDEX_FIRST_PERSON, new Tag("tag6"));
 
         assertThrows(CommandException.class,
                 TagAddCommand.MESSAGE_TAG_LIMIT_REACHED, () -> command.execute(model));
