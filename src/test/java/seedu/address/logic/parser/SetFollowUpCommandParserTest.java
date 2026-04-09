@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.getErrorMessageForDuplicatePrefixes;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOLLOW_UP_DATE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -43,5 +45,17 @@ public class SetFollowUpCommandParserTest {
     public void parse_pastDate_success() {
         assertParseSuccess(parser, "1 d/2020-01-01",
                 new SetFollowUpCommand(INDEX_FIRST_PERSON, new FollowUpDate("2020-01-01")));
+    }
+
+    @Test
+    public void parse_duplicateFollowUpDatePrefix_failure() {
+        assertParseFailure(parser, "1 d/2026-07-13 d/2026-07-15",
+                getErrorMessageForDuplicatePrefixes(PREFIX_FOLLOW_UP_DATE));
+    }
+
+    @Test
+    public void parse_duplicateFollowUpDatePrefixWithInvalidSecondDate_failure() {
+        assertParseFailure(parser, "1 d/2026-07-13 d/2026-07-55",
+                getErrorMessageForDuplicatePrefixes(PREFIX_FOLLOW_UP_DATE));
     }
 }

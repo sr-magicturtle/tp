@@ -399,6 +399,7 @@ Format: `remind DAYS`
 * Contacts without a follow-up date will not be shown.
 
 Examples:
+* `remind 1` lists all contacts with follow-up dates today or tomorrow.
 * `remind 3` lists all contacts with follow-up dates within the next 3 days.
 * `remind 7` lists all contacts with follow-up dates within the next 7 days.
 

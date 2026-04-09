@@ -38,4 +38,14 @@ public class RemindCommandParserTest {
     public void parse_negative_failure() {
         assertParseFailure(parser, "-1", MESSAGE_INVALID_INDEX);
     }
+
+    @Test
+    public void parse_excessivelyLargePositive_failure() {
+        assertParseFailure(parser, "99999999999999999999", MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parse_integerOverflow_failure() {
+        assertParseFailure(parser, "2147483648", MESSAGE_INVALID_INDEX);
+    }
 }

@@ -78,4 +78,19 @@ public class NoteAddCommandParserTest {
         assertParseFailure(parser, "1 note/" + tooLong,
                 MESSAGE_CHAR_LIMIT_EXCEEDED);
     }
+
+    @Test
+    public void parse_excessivelyLargePositiveIndex_throwsParseException() {
+        assertParseFailure(parser, "99999999999999999999 note/Some note", MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parse_excessivelyLargeNegativeIndex_throwsParseException() {
+        assertParseFailure(parser, "-99999999999999999999 note/Some note", MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parse_integerOverflowIndex_throwsParseException() {
+        assertParseFailure(parser, "2147483648 note/Some note", MESSAGE_INVALID_INDEX);
+    }
 }

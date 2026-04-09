@@ -2,8 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RemindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -21,16 +21,7 @@ public class RemindCommandParser implements Parser<RemindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RemindCommand.MESSAGE_USAGE));
         }
-
-        if (!trimmedArgs.matches("\\d+")) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
-        }
-
-        int days = Integer.parseInt(trimmedArgs);
-        if (days <= 0) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
-        }
-
-        return new RemindCommand(days);
+        Index daysIndex = ParserUtil.parseIndex(trimmedArgs);
+        return new RemindCommand(daysIndex.getOneBased());
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static seedu.address.ui.PersonCard.setShown;
+import static seedu.address.ui.TagUtil.createTagNode;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -58,8 +59,8 @@ public class PersonDetailPanel extends UiPart<Region> {
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .limit(5) // limit to 5 tags to prevent overflow
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .limit(5) // Prevent overflow
+                .forEach(tag -> tags.getChildren().add(createTagNode(tag.tagName)));
 
         notes.setText(person.getNotes()
                 .map(Note::toString)
