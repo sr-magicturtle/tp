@@ -77,7 +77,7 @@ public class SetFollowUpCommandTest {
 
         String expectedMessage = String.format(SetFollowUpCommand.MESSAGE_SET_FOLLOW_UP_SUCCESS,
                 seedu.address.logic.Messages.format(editedPerson))
-                + "\n" + SetFollowUpCommand.MESSAGE_PAST_DATE_WARNING;
+                + "\n" + FollowUpDate.MESSAGE_PAST_DATE_WARNING;
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(personToEdit, editedPerson);
@@ -98,7 +98,7 @@ public class SetFollowUpCommandTest {
 
         String expectedMessage = String.format(SetFollowUpCommand.MESSAGE_SET_FOLLOW_UP_SUCCESS,
                 seedu.address.logic.Messages.format(editedPerson))
-                + "\n" + SetFollowUpCommand.MESSAGE_FAR_FUTURE_WARNING;
+                + "\n" + FollowUpDate.MESSAGE_FAR_FUTURE_WARNING;
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(personToEdit, editedPerson);

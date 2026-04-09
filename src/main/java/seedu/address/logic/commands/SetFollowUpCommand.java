@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -26,10 +25,6 @@ public class SetFollowUpCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 d/2026-12-31";
 
     public static final String MESSAGE_SET_FOLLOW_UP_SUCCESS = "Set follow up date for: %1$s";
-    public static final String MESSAGE_PAST_DATE_WARNING =
-            "Warning: follow up date is before today.";
-    public static final String MESSAGE_FAR_FUTURE_WARNING =
-            "Warning: follow up date is more than 5 years from today.";
 
     private final Index targetIndex;
     private final FollowUpDate followUpDate;
@@ -62,16 +57,7 @@ public class SetFollowUpCommand extends Command {
         StringBuilder feedback = new StringBuilder(
                 String.format(MESSAGE_SET_FOLLOW_UP_SUCCESS, Messages.format(editedPerson)));
 
-        LocalDate today = LocalDate.now();
-        LocalDate date = followUpDate.value;
-
-        if (date.isBefore(today)) {
-            feedback.append("\n").append(MESSAGE_PAST_DATE_WARNING);
-        }
-
-        if (date.isAfter(today.plusYears(5))) {
-            feedback.append("\n").append(MESSAGE_FAR_FUTURE_WARNING);
-        }
+        feedback.append(followUpDate.getWarnings());
 
         return new CommandResult(feedback.toString());
     }

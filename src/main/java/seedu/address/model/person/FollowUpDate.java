@@ -15,6 +15,11 @@ public class FollowUpDate {
     public static final String MESSAGE_CONSTRAINTS =
             "Follow up date should be in YYYY-MM-DD format.";
 
+    public static final String MESSAGE_PAST_DATE_WARNING =
+            "Warning: follow up date is before today.";
+    public static final String MESSAGE_FAR_FUTURE_WARNING =
+            "Warning: follow up date is more than 5 years from today.";
+
     public final LocalDate value;
 
     /**
@@ -38,6 +43,20 @@ public class FollowUpDate {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    public String getWarnings() {
+        LocalDate today = LocalDate.now();
+        StringBuilder warnings = new StringBuilder();
+
+        if (value.isBefore(today)) {
+            warnings.append("\n").append(MESSAGE_PAST_DATE_WARNING);
+        }
+        if (value.isAfter(today.plusYears(5))) {
+            warnings.append("\n").append(MESSAGE_FAR_FUTURE_WARNING);
+        }
+
+        return warnings.toString();
     }
 
     @Override
