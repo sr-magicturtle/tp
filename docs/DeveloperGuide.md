@@ -82,7 +82,7 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
-* manages **View Mode**, a UI state where full contact details are displayed. Refer to the 
+* manages **View Mode**, a UI state where full contact details are displayed. Refer to the
 [View feature](#view-feature) section for implementation details.
 
 ### Logic component
@@ -157,7 +157,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Note Add feature
-#### Implementation
+#### The sequence diagram
 
 The following sequence diagram shows how a `NoteAddCommand` is executed through the `Logic` component:
 
@@ -178,13 +178,13 @@ Users can add tags to contacts for categorisation, using the `tagadd` command. T
 
 ### View feature
 
-Users can view the full details of a contact using the `view` command. The implementation of this feature is shown 
+Users can view the full details of a contact using the `view` command. The implementation of this feature is shown
 in the sequence diagram below.
 
 #### The sequence diagram
 ![View Mode Sequence Diagram](images/ViewSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ViewCommandParser` 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ViewCommandParser`
 should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 

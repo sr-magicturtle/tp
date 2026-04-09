@@ -67,18 +67,17 @@ public class TagRemoveCommandTest {
     }
 
     @Test
-    public void execute_lastPersonValidTag_success() {
+    public void execute_secondPersonValidTag_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        Index testIndex = INDEX_SECOND_PERSON;
-        Person personToRemoveTagFrom = model.getFilteredPersonList().get(testIndex.getZeroBased());
+        Person personToRemoveTagFrom = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Tag existingTag = personToRemoveTagFrom.getTags().iterator().next();
 
         Person editedPerson = personToRemoveTagFrom.removeTag(existingTag);
         expectedModel.setPerson(personToRemoveTagFrom, editedPerson);
 
-        TagRemoveCommand command = new TagRemoveCommand(testIndex, existingTag);
+        TagRemoveCommand command = new TagRemoveCommand(INDEX_SECOND_PERSON, existingTag);
         String expectedMessage = String.format(
                 TagRemoveCommand.MESSAGE_REMOVE_TAG_SUCCESS, existingTag.tagName, editedPerson.getName());
 

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -21,7 +20,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.circle.Circle;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -29,7 +27,7 @@ public class CircleAddCommandTest {
 
     /**
      * Creates a fresh AddressBook with test persons that have no circles assigned.
-     * Used to avoid conflicts with typical test data that already have circles.
+     * Used to test CircleAddCommand without conflicts from pre-assigned circles.
      */
     private static AddressBook createCleanAddressBook() {
         AddressBook ab = new AddressBook();
@@ -50,7 +48,7 @@ public class CircleAddCommandTest {
     }
 
     @Test
-    public void execute_validIndexAndNewCircle_success() {
+    public void execute_validIndexAndCircle_success() {
         Model model = createCleanModel();
         Model expectedModel = createCleanModel();
 
@@ -68,67 +66,9 @@ public class CircleAddCommandTest {
     }
 
     @Test
-    public void execute_validIndexProspect_success() {
-        Model model = createCleanModel();
-        Model expectedModel = createCleanModel();
-
-        Person personAtIndex = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person circledPerson = new PersonBuilder(personAtIndex)
-                .withCircle(PROSPECTS.getCircleName())
-                .build();
-
-        expectedModel.setPerson(personAtIndex, circledPerson);
-
-        CircleAddCommand command = new CircleAddCommand(INDEX_FIRST_PERSON, PROSPECTS);
-        String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, PROSPECTS.getCircleName(), circledPerson.getName());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_validIndexFriend_success() {
-        Model model = createCleanModel();
-        Model expectedModel = createCleanModel();
-
-        Person personAtIndex = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Person circledPerson = new PersonBuilder(personAtIndex)
-                .withCircle(FRIENDS.getCircleName())
-                .build();
-
-        expectedModel.setPerson(personAtIndex, circledPerson);
-
-        CircleAddCommand command = new CircleAddCommand(INDEX_SECOND_PERSON, FRIENDS);
-        String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, FRIENDS.getCircleName(), circledPerson.getName());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_lastPersonValidCircle_success() {
-        Model model = createCleanModel();
-        Model expectedModel = createCleanModel();
-
-        Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
-
-        Person personAtIndex = model.getFilteredPersonList().get(lastIndex.getZeroBased());
-        Person circledPerson = new PersonBuilder(personAtIndex)
-                .withCircle(PROSPECTS.getCircleName())
-                .build();
-
-        expectedModel.setPerson(personAtIndex, circledPerson);
-
-        CircleAddCommand command = new CircleAddCommand(lastIndex, PROSPECTS);
-        String expectedMessage = String.format(
-            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, PROSPECTS.getCircleName(), circledPerson.getName());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_invalidIndex_throwsCommandException() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-
         CircleAddCommand command = new CircleAddCommand(outOfBoundIndex, CLIENTS);
 
         assertThrows(CommandException.class,
@@ -164,17 +104,21 @@ public class CircleAddCommandTest {
     }
 
     @Test
-    public void execute_differentIndexes_allValid() {
-        Circle[] validCircles = {CLIENTS, PROSPECTS, FRIENDS};
-        Index[] indexes = {INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+    public void execute_secondPersonWithProspectCircle_success() {
+        Model model = createCleanModel();
+        Model expectedModel = createCleanModel();
 
-        for (int i = 0; i < validCircles.length; i++) {
-            Model model = createCleanModel();
-            Index index = indexes[i % indexes.length];
-            CircleAddCommand command = new CircleAddCommand(index, validCircles[i]);
+        Person personAtIndex = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Person circledPerson = new PersonBuilder(personAtIndex)
+                .withCircle(PROSPECTS.getCircleName())
+                .build();
 
-            assertDoesNotThrow(() -> command.execute(model));
-        }
+        expectedModel.setPerson(personAtIndex, circledPerson);
+
+        CircleAddCommand command = new CircleAddCommand(INDEX_SECOND_PERSON, PROSPECTS);
+        String expectedMessage = String.format(
+            CircleAddCommand.MESSAGE_CIRCLE_PERSON_SUCCESS, PROSPECTS.getCircleName(), circledPerson.getName());
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test

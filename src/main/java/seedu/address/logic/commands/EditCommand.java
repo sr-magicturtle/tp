@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -97,15 +96,20 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_TAG_LIMIT_EXCEEDED);
         }
 
+        //Check for duplicate person
         if (model.hasPersonExcluding(editedPerson, personToEdit)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        StringBuilder feedback = new StringBuilder(
+                String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+
+        editedPerson.getFollowUpDate()
+                .ifPresent(date -> feedback.append(date.getWarnings()));
+
         model.setPerson(personToEdit, editedPerson);
 
-        Predicate<Person> predicate = p -> p.isSamePerson(editedPerson);
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(feedback.toString());
     }
 
     /**

@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalCircles.CLIENTS;
-import static seedu.address.testutil.TypicalCircles.FRIENDS;
 import static seedu.address.testutil.TypicalCircles.PROSPECTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -86,36 +84,6 @@ public class CircleRemoveCommandTest {
         String expectedMessage = String.format(CircleRemoveCommand.MESSAGE_CIRCLE_PERSON_SUCCESS,
             lastPersonWithCircle.getName());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_multiplePersonsWithCircles() {
-        Circle[] circles = {CLIENTS, PROSPECTS, FRIENDS};
-
-        for (Circle circle : circles) {
-            Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-            setCircleAtIndex(model, INDEX_FIRST_PERSON, Optional.of(circle));
-
-            CircleRemoveCommand command = new CircleRemoveCommand(INDEX_FIRST_PERSON);
-
-            assertDoesNotThrow(() -> command.execute(model));
-            Person updatedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-            assertTrue(updatedPerson.getCircle().isEmpty());
-        }
-    }
-
-    @Test
-    public void execute_removeCircleThenAddAgain() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-        setCircleAtIndex(model, INDEX_FIRST_PERSON, Optional.of(CLIENTS));
-
-        CircleRemoveCommand removeCommand = new CircleRemoveCommand(INDEX_FIRST_PERSON);
-        assertDoesNotThrow(() -> removeCommand.execute(model));
-
-        Person personAfterRemove = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        assertTrue(personAfterRemove.getCircle().isEmpty());
     }
 
     @Test

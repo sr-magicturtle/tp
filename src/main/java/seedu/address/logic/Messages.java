@@ -45,9 +45,9 @@ public class Messages {
                 .append("; Address: ")
                 .append(person.isDefaultAddress() ? "-" : person.getAddress())
                 .append("; FollowUpDate: ")
-                .append(person.getFollowUpDate().isPresent() ? person.getFollowUpDate().get() : "N/A")
+                .append(person.getFollowUpDate().isPresent() ? person.getFollowUpDate().get() : "-")
                 .append("; Circle: ")
-                .append(person.getCircle().isPresent() ? person.getCircle().get() : "N/A")
+                .append(person.getCircle().isPresent() ? person.getCircle().get() : "-")
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
 
