@@ -34,14 +34,8 @@ public class CircleAddCommandParser implements Parser<CircleAddCommand> {
         // Ensure no duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CIRCLE);
 
-        // Parse index
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                CircleAddCommand.MESSAGE_USAGE), pe);
-        }
+        Index index = ParserUtil.parseIndex(
+                argMultimap.getPreamble(), CircleAddCommand.MESSAGE_USAGE);
 
         // Parse and validate circle name
         String circleName = argMultimap.getValue(PREFIX_CIRCLE).get().trim();

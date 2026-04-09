@@ -134,7 +134,7 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_OOR_INDEX);
     }
 
     /**
@@ -151,7 +151,27 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_OOR_INDEX);
+    }
+
+    @Test
+    public void execute_tagLimitExceeded_failure() {
+        // Create a person with maximum allowed tags (5)
+        Person personWithMaxTags = new PersonBuilder()
+                .withName("Max Tags Person")
+                .withPhone("99999999")
+                .withEmail("max@example.com")
+                .withAddress("Address")
+                .withTags("tag1", "tag2", "tag3", "tag4", "tag5")
+                .build();
+
+        // Try to add a 6th tag using edit command
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(personWithMaxTags)
+                .withTags("tag1", "tag2", "tag3", "tag4", "tag5", "tag6")
+                .build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_TAG_LIMIT_EXCEEDED);
     }
 
     @Test

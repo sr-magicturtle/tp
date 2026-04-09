@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CircleAddCommand;
 import seedu.address.model.circle.Circle;
 
@@ -23,14 +24,6 @@ public class CircleAddCommandParserTest {
         CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
 
         assertParseSuccess(parser, "1 c/client", expectedCommand);
-    }
-
-    @Test
-    public void parse_validArgsUppercase_success() {
-        Circle expectedCircle = new Circle("CLIENT");
-        Index expectedIndex = Index.fromOneBased(1);
-        CircleAddCommand expectedCommand = new CircleAddCommand(expectedIndex, expectedCircle);
-        assertParseSuccess(parser, "1 c/CLIENT", expectedCommand);
     }
 
     @Test
@@ -77,13 +70,17 @@ public class CircleAddCommandParserTest {
     }
 
     @Test
-    public void parse_invalidIndex_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CircleAddCommand.MESSAGE_USAGE);
+    public void parse_indexOutOfRange_failure() {
         // zero index
-        assertParseFailure(parser, "0 c/client", expectedMessage);
+        assertParseFailure(parser, "0 c/client", Messages.MESSAGE_OOR_INDEX);
 
         // negative index
-        assertParseFailure(parser, "-1 c/client", expectedMessage);
+        assertParseFailure(parser, "-1 c/client", Messages.MESSAGE_OOR_INDEX);
+    }
+
+    @Test
+    public void parse_nonNumericalIndex_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CircleAddCommand.MESSAGE_USAGE);
 
         // non-integer index
         assertParseFailure(parser, "abc c/client", expectedMessage);

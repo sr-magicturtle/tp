@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.NoteAddCommand.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.model.person.Note.MAX_CHAR_COUNT;
@@ -11,6 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.NoteAddCommand;
 import seedu.address.model.person.Note;
 
@@ -63,8 +63,8 @@ public class NoteAddCommandParserTest {
 
     @Test
     public void parse_nonPositiveIndex_throwsParseException() {
-        assertParseFailure(parser, "0 note/Some note", MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, "-1 note/Some note", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "0 note/Some note", Messages.MESSAGE_OOR_INDEX);
+        assertParseFailure(parser, "-1 note/Some note", Messages.MESSAGE_OOR_INDEX);
     }
 
     @Test
@@ -81,16 +81,16 @@ public class NoteAddCommandParserTest {
 
     @Test
     public void parse_excessivelyLargePositiveIndex_throwsParseException() {
-        assertParseFailure(parser, "99999999999999999999 note/Some note", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "99999999999999999999 note/Some note", INVALID_FORMAT_MESSAGE);
     }
 
     @Test
     public void parse_excessivelyLargeNegativeIndex_throwsParseException() {
-        assertParseFailure(parser, "-99999999999999999999 note/Some note", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "-99999999999999999999 note/Some note", INVALID_FORMAT_MESSAGE);
     }
 
     @Test
     public void parse_integerOverflowIndex_throwsParseException() {
-        assertParseFailure(parser, "2147483648 note/Some note", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "2147483648 note/Some note", Messages.MESSAGE_OOR_INDEX);
     }
 }

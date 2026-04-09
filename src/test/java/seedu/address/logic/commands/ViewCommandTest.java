@@ -71,7 +71,7 @@ public class ViewCommandTest {
 
         CommandException thrown = assertThrows(CommandException.class, () -> command.execute(model));
 
-        assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+        assertEquals(Messages.MESSAGE_OOR_INDEX,
                 thrown.getMessage());
     }
 }

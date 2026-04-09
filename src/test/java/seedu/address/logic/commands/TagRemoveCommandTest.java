@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalTags.COLLEAGUE;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -51,7 +52,7 @@ public class TagRemoveCommandTest {
         TagRemoveCommand command = new TagRemoveCommand(outOfBoundIndex, COLLEAGUE);
 
         assertThrows(CommandException.class,
-                TagRemoveCommand.MESSAGE_INVALID_PERSON, () -> command.execute(model));
+                Messages.MESSAGE_OOR_INDEX, () -> command.execute(model));
     }
 
     @Test
@@ -66,7 +67,7 @@ public class TagRemoveCommandTest {
     }
 
     @Test
-    public void execute_lastPersonValidTag_success() {
+    public void execute_secondPersonValidTag_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

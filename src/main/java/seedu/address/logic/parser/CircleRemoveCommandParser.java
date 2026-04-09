@@ -34,12 +34,8 @@ public class CircleRemoveCommandParser implements Parser<CircleRemoveCommand> {
                 CircleRemoveCommand.MESSAGE_USAGE));
         }
 
-        // Parse and validate index
-        try {
-            Index index = ParserUtil.parseIndex(trimmedArgs);
-            return new CircleRemoveCommand(index);
-        } catch (ParseException pe) {
-            throw pe;
-        }
+        Index index = ParserUtil.parseIndex(trimmedArgs, CircleRemoveCommand.MESSAGE_USAGE);
+
+        return new CircleRemoveCommand(index);
     }
 }

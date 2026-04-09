@@ -27,7 +27,6 @@ public class NoteClearCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_CLEAR_NOTE_SUCCESS = "Cleared note for Person: %1$s";
-    public static final String MESSAGE_INVALID_INDEX = "The person index provided is out of range.";
 
     private final Index index;
 
@@ -51,7 +50,7 @@ public class NoteClearCommand extends Command {
             throw new CommandException("No persons available to clear notes from.");
         }
         if (index.getZeroBased() < 0 || index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_INDEX);
+            throw new CommandException(Messages.MESSAGE_OOR_INDEX);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());

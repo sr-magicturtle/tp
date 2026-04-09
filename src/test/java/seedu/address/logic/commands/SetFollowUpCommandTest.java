@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.Messages.MESSAGE_OOR_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -48,7 +48,7 @@ public class SetFollowUpCommandTest {
         SetFollowUpCommand setFollowUpCommand =
                 new SetFollowUpCommand(outOfBoundIndex, new FollowUpDate("2099-12-31"));
 
-        String expectedMessage = MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+        String expectedMessage = MESSAGE_OOR_INDEX;
         assertThrows(CommandException.class, expectedMessage, () -> {
             setFollowUpCommand.execute(model);
         });

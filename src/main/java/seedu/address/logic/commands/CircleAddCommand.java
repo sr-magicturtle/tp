@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.circle.Circle;
@@ -30,7 +31,6 @@ public class CircleAddCommand extends Command {
 
     public static final String MESSAGE_CIRCLE_PERSON_SUCCESS = "Added circle '%1$s' to %2$s";
     public static final String MESSAGE_CIRCLE_PERSON_FAILURE = "Add failed: contact already has a circle.";
-    public static final String MESSAGE_INVALID_PERSON = "The person does not exist in the address book.";
 
     private static final Logger logger = LogsCenter.getLogger(CircleAddCommand.class);
 
@@ -56,7 +56,7 @@ public class CircleAddCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON);
+            throw new CommandException(Messages.MESSAGE_OOR_INDEX);
         }
 
         Person personAtIndex = lastShownList.get(index.getZeroBased());

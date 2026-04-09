@@ -115,10 +115,8 @@ public class CircleFilterCommandParserTest {
 
     @Test
     public void parse_caseInsensitivity() {
-        // verify that all valid circles work in any case
         // lowercase
         assertParseSuccess(parser, "client", new CircleFilterCommand("client"));
-
 
         // uppercase (should be normalized to lowercase)
         assertParseSuccess(parser, "PROSPECT", new CircleFilterCommand("prospect"));

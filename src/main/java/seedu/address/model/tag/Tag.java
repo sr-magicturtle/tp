@@ -9,6 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Tag {
 
+    public static final int MAX_TAGS_PER_PERSON = 5;
+
     public static final String MESSAGE_CONSTRAINTS =
             "Tags must be 1-20 characters, contain only letters, numbers, or hyphens, "
                     + "and must not contain spaces (case-insensitive).";
