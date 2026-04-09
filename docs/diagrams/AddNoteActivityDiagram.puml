@@ -15,7 +15,7 @@ if () then ([invalid format])
     :Note gets added to person;
     :save to storage;
     :Shows note add success string;
-    else ([total notes is more than 200 words])
+    else ([total notes is more than 1000 characters])
         :Shows word limit exceeded parse exception;
     endif
 endif
