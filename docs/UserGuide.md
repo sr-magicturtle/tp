@@ -71,7 +71,15 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 
 <div markdown="span" class="alert alert-primary">
 
-**Tip:** Read the [Command Summary](#command-summary) first for a quick overview of the available commands before proceeding to the detailed feature descriptions below.
+**Tip #1:** Read the [Command Summary](#command-summary) first for a quick overview of the available commands before 
+proceeding to the detailed feature descriptions below.
+
+</div>
+
+<div markdown="span" class="alert alert-primary">
+
+**Tip #2:** Read the [Notes on Command Format](#features) before diving into individual features, it explains things 
+like optional fields, parameters, and command shortcuts that will make using the app much easier!
 
 </div>
 
@@ -144,7 +152,8 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/FOLLOWUPDATE] [c/CIRCLE]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** `1, 2, 3, …`
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. 
+* The index **must be a positive integer** `1, 2, 3, …`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
@@ -153,12 +162,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/FOLLOWUP
 
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 * You can input multiple tags under the `edit` command. Each tag should have its own `t/` prefix.
-* When editing tags, you must specify **all** the tags that the person should have after the edit. Existing tags will be replaced by the set of tags provided in the `edit` command.
+* When editing tags, you must specify **all** the tags that the person should have after the edit. Existing tags will 
+* be replaced by the set of tags provided in the `edit` command.
 * If you want to add or remove tags one at a time, use `tagadd` or `tagrm` instead.
 
 <div markdown="span" class="alert alert-warning">
 
-**Warning:** When editing tags, you must specify all the tags that the person should have after the edit. Any existing tag will be replaced by the new set of tags provided under `edit`.
+**Warning:** Editing tags will replace all existing tags. Make sure to include all the tags you want the person to have 
+when using `edit`.
 
 **Example:**
 A contact initially has the tags `friend` and `colleague`. After you run `edit 1 t/friend t/cafe`, only the tags `friend` and `cafe` will be displayed.
@@ -215,7 +226,11 @@ While in View Mode:
 * Commands that will exit View Mode: `add`, `delete`, `list`, `find`, `remind`, `clear`
 * Run `list` to exit View Mode and return to the full contact list.
 
-> **Tip:** To view a different contact, run `list` first, then `view` on the desired index.
+<div markdown="span" class="alert alert-primary">
+
+ **Tip:** To view a different contact, run `list` first, then `view` on the desired index.
+
+</div>
 
 ### Deleting a person : `delete`
 
@@ -401,6 +416,12 @@ Examples:
 * `remind 3` lists all contacts with follow-up dates within the next 3 days.
 * `remind 7` lists all contacts with follow-up dates within the next 7 days.
 
+<div markdown="span" class="alert alert-primary">
+
+**Tip:** To return to the original view, simply type `list`.
+
+</div>
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -461,8 +482,11 @@ _Details coming soon ..._
 
 ## Known Issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen and later switch to using only the primary screen, the GUI may open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command again (or use the `Help` menu, or the keyboard shortcut `F1`), the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **When using multiple screens**, if you move the application to a secondary screen and later switch to using only the 
+primary screen, the GUI may open off-screen. The remedy is to delete the `preferences.json` file created by the 
+application before running the application again.
+2. **If you minimize the Help Window** and then run the `help` command again (or use the `Help` menu, or the keyboard 
+shortcut `F1`), the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -157,7 +157,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Note Add feature
-#### Implementation
+#### The sequence diagram
 
 The following sequence diagram shows how a `NoteAddCommand` is executed through the `Logic` component:
 
