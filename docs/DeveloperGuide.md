@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+This project is based on the [AddressBook-Level3](https://github.com/se-edu/addressbook-level3) project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +68,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -87,7 +87,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -117,7 +117,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagramv3.png" width="450" />
 
@@ -137,7 +137,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-W12-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -163,8 +163,10 @@ The following sequence diagram shows how a `NoteAddCommand` is executed through 
 
 ![NoteAddSequnceDiagram](images/NoteAddSequenceDiagram.png)
 
+The following activity diagram summarizes the execution of a `NoteAddCommand`:
+![NoteAddActivityDiagram](images/NoteAddActivityDiagram.png)
 
-### Tag add feature
+### Tag Add feature
 
 Users can add tags to contacts for categorisation, using the `tagadd` command. The implementation of this feature is shown in the sequence diagram below.
 
@@ -314,22 +316,27 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                   | I want to …​                          | So that I can…​                                      |
-| -------- |---------------------------| ------------------------------------- | ---------------------------------------------------- |
-| `* * *`  | student financial advisor | add a contact                         | capture someone immediately after meeting them       |
-| `* * *`  | student financial advisor | list all contacts                     | browse my network quickly                            |
-| `* * *`  | student financial advisor | view a contact by index               | open full details quickly after listing/searching    |
-| `* * *`  | student financial advisor | find contacts by name keyword         | retrieve people instantly                            |
-| `* * *`  | student financial advisor | edit a contact’s details              | keep details accurate and fix typos quickly          |
-| `* * *`  | student financial advisor | delete a contact with confirmation    | remove outdated entries safely                       |
-| `* * *`  | student financial advisor | add a tag to a contact                | categorise contacts quickly                          |
-| `* * *`  | student financial advisor | remove a tag from a contact           | keep tags clean and updated                          |
-| `* *`    | student financial advisor | find contacts by notes keyword        | locate someone by remembered context                 |
-| `* *`    | student financial advisor | list contacts filtered by tag         | target a group easily                                |
-| `* *`    | student financial advisor | sort contacts by name                 | scan large lists more easily                         |
-| `* *`    | user                      | see usage instructions/help           | refer to commands when I forget how to use the app   |
-| `*`      | student financial advisor | log interactions with a contact       | track engagement history                             |
-| `*`      | student financial advisor | set follow-up dates / reminders       | avoid forgetting to check in                         |
+| Priority | As a …​                   | I want to …​                              | So that I can…​                                        |
+|----------|---------------------------|-------------------------------------------|--------------------------------------------------------|
+| `* * *`  | student financial advisor | add a contact                             | capture someone immediately after meeting them         |
+| `* * *`  | student financial advisor | list all contacts                         | browse my network quickly                              |
+| `* * *`  | student financial advisor | view a contact by index                   | open full details quickly after listing/searching      |
+| `* * *`  | student financial advisor | find contacts by name keyword             | retrieve people instantly                              |
+| `* * *`  | student financial advisor | edit a contact’s details                  | keep details accurate and fix typos quickly            |
+| `* * *`  | student financial advisor | delete a contact with confirmation        | remove outdated entries safely                         |
+| `* * *`  | student financial advisor | add a tag to a contact                    | categorise contacts quickly                            |
+| `* * *`  | student financial advisor | remove a tag from a contact               | keep tags clean and updated                            |
+| `* * *`  | student financial advisor | add notes on a contact                    | easily remember details about them                     |
+| `* * *`  | student financial advisor | remove notes on a contact                 | keep notes clean and updated                           |
+| `* * *`  | student financial advisor | add which circle an individual belongs to | easily classify my professional relationship with them |
+| `* * *`  | student financial advisor | add a follow up date                      | see who I have met and are going to meet               |
+| `* * *`  | student financial advisor | see who I have upcoming follow ups with   | see who I am supposed to meet up soon                  |
+| `* *`    | student financial advisor | find contacts by notes keyword            | locate someone by remembered context                   |
+| `* *`    | student financial advisor | list contacts filtered by tag             | target a group easily                                  |
+| `* *`    | student financial advisor | sort contacts by name                     | scan large lists more easily                           |
+| `* *`    | user                      | see usage instructions/help               | refer to commands when I forget how to use the app     |
+| `*`      | student financial advisor | log interactions with a contact           | track engagement history                               |
+| `*`      | student financial advisor | set follow-up dates / reminders           | avoid forgetting to check in                           |
 
 *{More to be added}*
 
