@@ -44,7 +44,7 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 
 ## Quick Start
 
-1. Ensure you have Java `17` or above installed on your computer.  
+1. Ensure you have Java `17` or above installed on your computer.
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W12-4/tp/releases).
@@ -52,8 +52,8 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 3. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your address book.
 
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in,
-   and run `java -jar fam.jar` to run the application.  
-   A GUI similar to the one below should appear in a few seconds. Note that the app contains some sample data.  
+   and run `java -jar fam.jar` to run the application.
+   A GUI similar to the one below should appear in a few seconds. Note that the app contains some sample data.
    ![Ui(updated)](images/Ui(updated).png)
 
 5. Type a command in the command box and press Enter to execute it.
@@ -83,20 +83,20 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 
 **Notes about the command format**
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.  
+* Words in `UPPER_CASE` are the parameters to be supplied by the user.
   e.g. in `add n/NAME`, `NAME` is a parameter, e.g. `add n/John Doe`.
 
-* Items in square brackets are optional.  
+* Items in square brackets are optional.
   e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…` after them can be used multiple times, or zero times.  
+* Items with `…` after them can be used multiple times, or zero times.
   e.g. `[t/TAG]…` can be omitted, or used as `t/friend`, `t/friend t/family`.
 
-* Parameters can be in any order.  
+* Parameters can be in any order.
   e.g. `n/NAME p/PHONE_NUMBER` is the same as `p/PHONE_NUMBER n/NAME`.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit`, and `clear`)
-  will be ignored.  
+  will be ignored.
   e.g. `help 123` will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands
@@ -160,7 +160,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/FOLLOWUP
 
 **Warning:** When editing tags, you must specify all the tags that the person should have after the edit. Any existing tag will be replaced by the new set of tags provided under `edit`.
 
-**Example:**  
+**Example:**
 A contact initially has the tags `friend` and `colleague`. After you run `edit 1 t/friend t/cafe`, only the tags `friend` and `cafe` will be displayed.
 
 </div>
@@ -181,7 +181,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched. e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).  
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
@@ -300,7 +300,7 @@ Examples:
 
 ### Add a circle to a person : `circleadd`
 
-Adds a circle to an existing person in the address book.  
+Adds a circle to an existing person in the address book.
 A circle refers to the type of relationship the user has with the contact.
 
 Format: `circleadd INDEX c/CIRCLE`
@@ -318,7 +318,7 @@ Examples:
 
 ### Remove a circle from a person : `circlerm`
 
-Removes a circle from an existing person in the address book.  
+Removes a circle from an existing person in the address book.
 A circle refers to the type of relationship the user has with the contact.
 
 Format: `circlerm INDEX`
@@ -334,7 +334,7 @@ Examples:
 
 ### Filter for a circle : `circlefilter`
 
-Filters and shows all contacts in the address book with the specified circle.  
+Filters and shows all contacts in the address book with the specified circle.
 A circle refers to the type of relationship the user has with the contact.
 
 Format: `circlefilter CIRCLE`
@@ -423,7 +423,7 @@ FAM's data is saved automatically as a JSON file `[JAR file location]/data/addre
 
 <div markdown="span" class="alert alert-warning">
 
-**Caution:** If your changes to the data file make its format invalid, FAM will discard all data and start with an empty data file the next time it runs. Hence, it is recommended to take a backup of the file before editing it.  
+**Caution:** If your changes to the data file make its format invalid, FAM will discard all data and start with an empty data file the next time it runs. Hence, it is recommended to take a backup of the file before editing it.
 Furthermore, certain edits can cause FAM to behave in unexpected ways (e.g. if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
 </div>
@@ -436,25 +436,25 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another computer?  
+**Q**: How do I transfer my data to another computer?
 **A**: Install FAM on the other computer. Overwrite the empty data file that it creates with the file from your previous FAM home folder that contains your data.
 
-**Q**: Can I add a circle or follow-up date when using `add`?  
+**Q**: Can I add a circle or follow-up date when using `add`?
 **A**: No. `add` only creates the contact. To add a circle or follow-up date, use `circleadd`, `followup`, or `edit` afterward.
 
-**Q**: Does `edit` add tags to the contact’s existing tags?  
+**Q**: Does `edit` add tags to the contact’s existing tags?
 **A**: No. Using `edit` with `t/` replaces the contact’s entire tag list with the new tags provided. Use `tagadd` or `tagrm` to modify tags one at a time.
 
-**Q**: How do I remove all tags from a contact?  
+**Q**: How do I remove all tags from a contact?
 **A**: Use `edit INDEX t/` to clear all tags for that contact.
 
-**Q**: Why do I have to use index `1` after `view`?  
+**Q**: Why do I have to use index `1` after `view`?
 **A**: In View Mode, only the selected contact is shown, so commands that require an index must use `1`.
 
-**Q**: Why is a contact not shown in `remind`?  
+**Q**: Why is a contact not shown in `remind`?
 **A**: Only contacts with a follow-up date are shown by `remind`.
 
-**Q**: Can I undo a `delete` or `clear` command?  
+**Q**: Can I undo a `delete` or `clear` command?
 **A**: No. There is currently no undo feature, so users should confirm carefully before deleting data.
 
 --------------------------------------------------------------------------------------------------------------------
