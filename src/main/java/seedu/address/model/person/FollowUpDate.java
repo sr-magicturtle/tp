@@ -15,6 +15,9 @@ public class FollowUpDate {
     public static final String MESSAGE_CONSTRAINTS =
             "Follow up date should be in YYYY-MM-DD format.";
 
+    public static final String MESSAGE_INVALID_DATE =
+            "Follow up date is not a valid calendar date.";
+
     public static final String MESSAGE_PAST_DATE_WARNING =
             "Warning: follow up date is before today.";
     public static final String MESSAGE_FAR_FUTURE_WARNING =
@@ -31,6 +34,14 @@ public class FollowUpDate {
         requireNonNull(date);
         checkArgument(isValidFollowUpDate(date), MESSAGE_CONSTRAINTS);
         value = LocalDate.parse(date);
+    }
+
+    /**
+     * Returns true if a given string matches the YYYY-MM-DD format pattern
+     * (without checking whether the date actually exists on the calendar).
+     */
+    public static boolean isValidDateFormat(String test) {
+        return test.matches("^\\d{4}-\\d{2}-\\d{2}$");
     }
 
     /**

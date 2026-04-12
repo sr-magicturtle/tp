@@ -24,6 +24,9 @@ public class RemindCommand extends Command {
     public static final String MESSAGE_SUCCESS =
             "Listed all persons with follow up dates within the next %1$d day(s).";
 
+    public static final String MESSAGE_INVALID_DAYS =
+            "DAYS must be a positive integer.\n" + MESSAGE_USAGE;
+
     private static final Logger logger = LogsCenter.getLogger(RemindCommand.class);
 
     private final int days;
@@ -45,7 +48,7 @@ public class RemindCommand extends Command {
         logger.fine("Filtering persons with follow up dates in the next " + days + " day(s)");
         model.updateFilteredPersonList(predicate);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, days), false , false, false, true);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, days), false, false, false, true);
     }
 
     @Override
@@ -67,4 +70,3 @@ public class RemindCommand extends Command {
         return RemindCommand.class.getCanonicalName() + "{days=" + days + "}";
     }
 }
-

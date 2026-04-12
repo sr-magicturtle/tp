@@ -26,6 +26,9 @@ public class SetFollowUpCommand extends Command {
 
     public static final String MESSAGE_SET_FOLLOW_UP_SUCCESS = "Set follow up date for: %1$s";
 
+    public static final String MESSAGE_FOLLOW_UP_UNCHANGED =
+            "Follow-up date unchanged: the date is already set to the same value.";
+
     private final Index targetIndex;
     private final FollowUpDate followUpDate;
 
@@ -50,6 +53,12 @@ public class SetFollowUpCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToEdit.getFollowUpDate().isPresent()
+                && personToEdit.getFollowUpDate().get().equals(followUpDate)) {
+            throw new CommandException(MESSAGE_FOLLOW_UP_UNCHANGED);
+        }
+
         Person editedPerson = personToEdit.setFollowUpDate(followUpDate);
 
         model.setPerson(personToEdit, editedPerson);

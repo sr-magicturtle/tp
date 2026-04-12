@@ -26,6 +26,9 @@ public class FollowUpClearCommand extends Command {
     public static final String MESSAGE_CLEAR_FOLLOW_UP_SUCCESS =
             "Cleared follow up date for: %1$s";
 
+    public static final String MESSAGE_NO_FOLLOW_UP_TO_CLEAR =
+            "No follow-up date to clear for: %1$s";
+
     private final Index targetIndex;
 
     /**
@@ -47,6 +50,12 @@ public class FollowUpClearCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToEdit.getFollowUpDate().isEmpty()) {
+            throw new CommandException(
+                    String.format(MESSAGE_NO_FOLLOW_UP_TO_CLEAR, Messages.format(personToEdit)));
+        }
+
         Person editedPerson = personToEdit.clearFollowUpDate();
 
         model.setPerson(personToEdit, editedPerson);

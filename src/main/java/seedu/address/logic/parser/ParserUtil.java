@@ -154,8 +154,11 @@ public class ParserUtil {
         requireNonNull(date);
         String trimmedDate = date.trim();
 
-        if (!FollowUpDate.isValidFollowUpDate(trimmedDate)) {
+        if (!FollowUpDate.isValidDateFormat(trimmedDate)) {
             throw new ParseException(FollowUpDate.MESSAGE_CONSTRAINTS);
+        }
+        if (!FollowUpDate.isValidFollowUpDate(trimmedDate)) {
+            throw new ParseException(FollowUpDate.MESSAGE_INVALID_DATE);
         }
 
         return new FollowUpDate(trimmedDate);
