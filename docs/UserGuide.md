@@ -442,16 +442,26 @@ Format: `exit`
 
 ### Saving the data
 
-FAM's data is saved to the hard disk automatically after any command that changes the data. There is no need to save manually.
+FAM conveniently auto-saves your data after every command, so you never have to worry about saving manually.
+
+If you wish to view or edit your data, you can access the file at:  
+`[JAR file location]/data/addressbook.json`
 
 ### Editing the data file
 
-FAM's data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+FAM's data is saved automatically as a JSON file at `[JAR file location]/data/addressbook.json`. Advanced users are 
+welcome to update data directly by editing that data file.
+
+**Caution:** If the file format is invalid, or if any fields contain values in an invalid format, FAM will load with an 
+empty address book on the next startup. The UI will display:
+`Data file could not be loaded. Starting with empty address book.`
 
 <div markdown="span" class="alert alert-warning">
+:warning: Warning: Although the storage file can still be manually corrected to a valid format, **running any command 
+while FAM is in this empty state will overwrite the file and permanently erase all existing data.**
 
-**Caution:** If your changes to the data file make its format invalid, FAM will discard all data and start with an empty data file the next time it runs. Hence, it is recommended to take a backup of the file before editing it.
-Furthermore, certain edits can cause FAM to behave in unexpected ways (e.g. if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+It is strongly recommended to back up the data file before making any changes, and to avoid executing any commands 
+until the file has been fixed.
 
 </div>
 
