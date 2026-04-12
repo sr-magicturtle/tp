@@ -665,32 +665,463 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-### Launch and shutdown
+### Manual testing conventions
+* Detailed command syntax, parameter constraints, and usage examples are documented in the User Guide under each command section.
+* DG manual tests focus on **behaviour verification** (state change, list update, UI change, error handling), not re-explaining command format.
+* For commands using `INDEX`, run `list` first (unless the test case explicitly requires a filtered list / View Mode).
+* Where a negative test lists an error message, verify the exact message shown in the result display / pop-up.
 
-1. Initial launch
+---
 
-   1. Download the jar file and copy into an empty folder
+## Launch and shutdown
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+### Initial launch
+**Steps:**
+1. Download the latest `FAM.jar` and copy it into an **empty folder**.
+2. Open a terminal in that folder and run:
+    * `java -jar FAM.jar`
 
-1. Saving window preferences
+**Expected:**
+* Shows the GUI with a set of sample contacts.
+* The folder will be used as the “home folder” for saved data.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+### Saving window preferences
+**Steps:**
+1. Resize the window.
+2. Move the window to a different location on screen.
+3. Close the app.
+4. Re-launch the app.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+**Expected:**
+* The most recent window size and location is retained.
 
-### Deleting a person
+---
 
-1. Deleting a person while all persons are being shown
+## Viewing help: `help`
+**Prerequisites:** App is running.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+### Positive test case: open help
+**Steps:**
+1. Run `help`
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+**Expected:**
+* Help window opens.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+### Positive test case: extra parameters ignored
+**Steps:**
+1. Run `help 123`
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+**Expected:**
+* Help window opens.
+
+---
+
+## Listing all persons: `list`
+**Prerequisites:** App is running.
+
+### Positive test case
+**Steps:**
+1. Run `list`
+
+**Expected:**
+* All contacts are shown in the list.
+
+---
+
+## Adding a person: `add`
+**Prerequisites:** App is running.
+
+### Positive test case 1: compulsory fields only
+**Steps:**
+1. Run `add n/John Doe p/98765432`
+
+**Expected:**
+* Command succeeds.
+* New contact appears in the list with name + phone set, other optional fields blank / default.
+
+### Positive test case 2: with optional fields
+**Steps:**
+1. Run `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/friend`
+
+**Expected:**
+* Command succeeds.
+* Contact appears with the provided email/address/tag.
+
+### Negative test case: missing compulsory prefixes
+**Steps:**
+1. Run `add John Doe p/98765432`
+
+**Expected:**
+* Command fails with an invalid command format error.
+
+---
+
+## Editing a person: `edit`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case 1: edit one field
+**Steps:**
+1. Run `edit 1 p/91234567`
+
+**Expected:**
+* Contact 1’s phone is updated.
+
+### Positive test case 2: edit follow-up date
+**Steps:**
+1. Run `edit 1 d/2026-04-01`
+
+**Expected:**
+* Contact 1’s follow-up date is updated.
+
+### Positive test case 3: edit circle
+**Steps:**
+1. Run `edit 1 c/friend`
+
+**Expected:**
+* Contact 1’s circle is updated.
+
+### Negative test case: no fields supplied
+**Steps:**
+1. Run `edit 1`
+
+**Expected:**
+* Command fails with the “At least one field to edit must be provided.” error.
+
+---
+
+## Finding persons by name: `find`
+**Prerequisites:** Ensure there are multiple contacts.
+
+### Positive test case
+**Steps:**
+1. Run `find John`
+
+**Expected:**
+* Only contacts whose names contain “John” are shown.
+
+### Negative test case: missing keyword
+**Steps:**
+1. Run `find`
+
+**Expected:**
+* Command fails with an invalid command format error.
+
+---
+
+## Viewing a person: `view`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case: enter View Mode
+**Steps:**
+1. Run `view 1`
+
+**Expected:**
+* App enters **View Mode** showing the selected contact’s full details.
+* The displayed contact is shown at **index 1** in View Mode.
+
+### Behaviour check: commands that require index in View Mode
+**Steps:**
+1. While still in View Mode, run `delete 1` (or `edit 1 ...`, `note 1 ...`)
+
+**Expected:**
+* The command applies to the currently displayed contact.
+
+### Exit View Mode
+**Steps:**
+1. Run `list`
+
+**Expected:**
+* App exits View Mode and returns to full contact list.
+
+---
+
+## Deleting a person: `delete`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case: confirmed deletion
+**Steps:**
+1. Run `delete 1`
+2. In the confirmation pop-up, click **OK**.
+
+**Expected:**
+* Contact 1 is deleted from the list.
+* A success message is shown.
+
+### Negative test case: cancelled deletion
+**Steps:**
+1. Run `delete 1`
+2. In the confirmation pop-up, click **Cancel** / close the dialog.
+
+**Expected:**
+* No contact is deleted.
+
+### Negative test case: invalid index
+**Steps:**
+1. Run `delete 0`
+
+**Expected:**
+* Command fails with an index out of range error.
+* No contact is deleted.
+
+---
+
+## Adding a tag: `tagadd`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case: add new tag
+**Steps:**
+1. Run `tagadd 1 t/friend`
+
+**Expected:**
+* Tag `friend` is added to contact 1 (tag is created if it does not exist).
+
+### Negative test case: multiple tag values in one command
+**Steps:**
+1. Run `tagadd 1 t/friend t/colleague`
+
+**Expected:**
+* Command fails (only 1 tag can be added at a time).
+
+### Negative test case: exceed max tag count
+**Steps:**
+1. Ensure contact 1 already has 5 tags.
+2. Run `tagadd 1 t/extra`
+
+**Expected:**
+* Command fails (max 5 tags).
+
+---
+
+## Removing a tag: `tagrm`
+**Prerequisites:** Ensure contact 1 has tag `friend`.
+
+### Positive test case
+**Steps:**
+1. Run `tagrm 1 t/friend`
+
+**Expected:**
+* Tag `friend` is removed from contact 1.
+
+### Negative test case: tag does not exist
+**Steps:**
+1. Run `tagrm 1 t/notatag`
+
+**Expected:**
+* Command fails and tag is not removed.
+
+---
+
+## Adding a note: `note`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case: add note
+**Steps:**
+1. Run `note 1 note/Met at career fair`
+
+**Expected:**
+* Note is added to contact 1.
+* (If notes are only shown in View Mode) Run `view 1` and verify the note is visible.
+
+### Negative test case: blank note
+**Steps:**
+1. Run `note 1 note/`
+
+**Expected:**
+* Command fails (blank notes are rejected).
+
+### Negative test case: exceed note length limit
+**Steps:**
+1. Run a `note` command with a note that pushes total notes beyond the limit (e.g., > 1000 characters combined).
+
+**Expected:**
+* Command fails and note is not added.
+
+---
+
+## Clearing a note: `noteclear`
+**Prerequisites:** Ensure contact 1 has notes.
+
+### Positive test case
+**Steps:**
+1. Run `noteclear 1`
+
+**Expected:**
+* Notes for contact 1 are cleared.
+
+---
+
+## Adding a circle: `circleadd`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact and contact 1 does not already have a circle.
+
+### Positive test case
+**Steps:**
+1. Run `circleadd 1 c/client`
+
+**Expected:**
+* Circle `client` is set for contact 1.
+
+### Negative test case: invalid circle
+**Steps:**
+1. Run `circleadd 1 c/family`
+
+**Expected:**
+* Command fails (only `client`, `prospect`, `friend` allowed).
+
+---
+
+## Removing a circle: `circlerm`
+**Prerequisites:** Ensure contact 1 has a circle.
+
+### Positive test case
+**Steps:**
+1. Run `circlerm 1`
+
+**Expected:**
+* Circle is removed from contact 1.
+
+### Negative test case: no circle to remove
+**Steps:**
+1. Ensure contact 1 has no circle.
+2. Run `circlerm 1`
+
+**Expected:**
+* Command fails (cannot remove a non-existent circle).
+
+---
+
+## Filtering by circle: `circlefilter`
+**Prerequisites:** Ensure you have contacts with different circles.
+
+### Positive test case
+**Steps:**
+1. Run `circlefilter client`
+
+**Expected:**
+* Only contacts in circle `client` are shown.
+
+### Negative test case: invalid circle value
+**Steps:**
+1. Run `circlefilter family`
+
+**Expected:**
+* Command fails (invalid circle).
+
+### Return to original list
+**Steps:**
+1. Run `list`
+
+**Expected:**
+* Full contact list is shown again.
+
+---
+
+## Setting follow-up date: `followup`
+**Prerequisites:** Run `list` and ensure there is at least 1 contact.
+
+### Positive test case 1: valid date format
+**Steps:**
+1. Run `followup 1 d/2026-04-01`
+
+**Expected:**
+* Follow-up date for contact 1 is set.
+
+### Positive test case 2: within 3 days highlight
+**Steps:**
+1. Set follow-up date for contact 1 to a date within the next 3 days (inclusive).
+2. Observe the follow-up date display in the list.
+
+**Expected:**
+* Follow-up date appears underlined.
+
+### Negative test case: invalid date format
+**Steps:**
+1. Run `followup 1 d/26-03-2026`
+
+**Expected:**
+* Command fails due to invalid date format.
+
+---
+
+## Clearing follow-up date: `followupclear`
+**Prerequisites:** Ensure contact 1 has a follow-up date.
+
+### Positive test case
+**Steps:**
+1. Run `followupclear 1`
+
+**Expected:**
+* Follow-up date is cleared.
+
+---
+
+## Listing upcoming follow-ups: `remind`
+**Prerequisites:** Ensure at least one contact has a follow-up date.
+
+### Positive test case
+**Steps:**
+1. Run `remind 3`
+
+**Expected:**
+* Only contacts whose follow-up dates are from today up to the next 3 days are shown.
+* Contacts without a follow-up date are not shown.
+
+### Negative test case: invalid DAYS
+**Steps:**
+1. Run `remind 0`
+
+**Expected:**
+* Command fails (DAYS must be a positive integer).
+
+### Return to original list
+**Steps:**
+1. Run `list`
+
+**Expected:**
+* Full contact list is shown again.
+
+---
+
+## Clearing all entries: `clear`
+**Prerequisites:** Ensure there is at least 1 contact.
+
+### Positive test case: confirmed clear
+**Steps:**
+1. Run `clear`
+2. In the confirmation pop-up, click **OK**.
+
+**Expected:**
+* All contacts are deleted and the list becomes empty.
+
+### Negative test case: cancelled clear
+**Steps:**
+1. Run `clear`
+2. In the confirmation pop-up, click **Cancel** / close the dialog.
+
+**Expected:**
+* No contacts are deleted.
+
+---
+
+## Exiting the program: `exit`
+### Positive test case
+**Steps:**
+1. Run `exit`
+
+**Expected:**
+* Application closes.
+
+---
+
+## Saving data
+### Auto-save after modifications
+**Steps:**
+1. Run an operation that modifies data (e.g., `add ...`).
+2. Exit the app.
+3. Re-launch the app.
+
+**Expected:**
+* The added/edited data persists after re-launch.
+
+### Data file location
+**Expected:**
+* Data is stored at: `[JAR file location]/data/addressbook.json`

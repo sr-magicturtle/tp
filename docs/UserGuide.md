@@ -125,7 +125,7 @@ Adds a person to the address book.
 
 * Minimum required fields: `n/NAME` and `p/PHONE_NUMBER`.
 * Name has to be alphanumeric and can contain spaces, but cannot be blank.
-* Phone number has to be numeric and cannot be blank.
+* Phone number has to be numeric and cannot be blank (at least 3 digits and not more than 17 digits).
 * Email, address, and tag are optional. These values can be updated after the contact is created using the `edit` command.
 
 Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [t/TAG]…`
