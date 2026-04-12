@@ -46,6 +46,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
 
+    private String loadErrorMessage = null;
+
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -88,6 +90,7 @@ public class MainApp extends Application {
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
             initialData = new AddressBook();
+            loadErrorMessage = "Data file could not be loaded. Starting with empty address book.";
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -171,7 +174,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        ui.start(primaryStage, loadErrorMessage);
     }
 
     @Override

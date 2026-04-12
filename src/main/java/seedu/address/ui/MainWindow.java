@@ -115,6 +115,13 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Returns the {@code ResultDisplay} of this window.
+     */
+    public ResultDisplay getResultDisplay() {
+        return resultDisplay;
+    }
+
+    /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {

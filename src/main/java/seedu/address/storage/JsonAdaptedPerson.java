@@ -125,6 +125,9 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
+        if (modelTags.size() > 5) {
+            throw new IllegalValueException("Person cannot have more than 5 tags.");
+        }
 
         final Optional<FollowUpDate> modelFollowUpDate;
         if (followUpDate == null) {
@@ -136,9 +139,15 @@ class JsonAdaptedPerson {
             modelFollowUpDate = Optional.of(new FollowUpDate(followUpDate));
         }
 
-        Optional<Note> modelNotes = (notes != null)
-                ? Optional.of(new Note(notes))
-                : Optional.empty();
+        Optional<Note> modelNotes;
+        if (notes != null) {
+            if (notes.length() > Note.MAX_CHAR_COUNT) {
+                throw new IllegalValueException(Note.MESSAGE_CHAR_LIMIT_EXCEEDED);
+            }
+            modelNotes = Optional.of(new Note(notes));
+        } else {
+            modelNotes = Optional.empty();
+        }
 
         Optional<Circle> modelCircle = Optional.empty();
         if (circle != null) {
