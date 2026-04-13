@@ -9,20 +9,24 @@
 
 ## Description
 
-It is named `Friends And Money` (`FAM` for short) because is aimed to cultivate a FAMily culture between students and financial advisors
+It is named `Friends And Money` (`FAM` for short) because is aimed to cultivate a FAMily culture between students and financial advisors.
 
-FAM has utilises the following features: <br>
+FAM offers the following features: <br>
 * Add contact
 * List contacts
 * View contact (by index)
 * Find contacts by name keyword
 * Edit contact
 * Delete contact (with confirmation)
-* Tagging (add/remove tags)
+* Tag management (add/remove tags)
+* Notes management (add/clear notes)
+* Circle management (add/remove relationship type: client/prospect/friend)
+* Follow-up tracking (set/clear follow-up dates)
+* Reminder system (view upcoming follow-ups)
 
 ### Example usages:
   * add n/Tian Jiarui p/91234567 e/jiarui@gmail.com a/geylang 6767 #67-69 t/insurance
-  * edit 1 e/tianyu@gmail.com a/geylang st 123
+  * edit 1 e/tianyu@gmail.com a/geylang st 123 c/client d/2026-09-21
 
 ---
 
