@@ -108,8 +108,10 @@ public class EditCommand extends Command {
                 .ifPresent(date -> feedback.append(date.getWarnings()));
 
         model.setPerson(personToEdit, editedPerson);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(feedback.toString());
+        return new CommandResult(feedback.toString(), false, false,
+                false, true);
     }
 
     /**

@@ -170,6 +170,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/FOLLOWUP
 * If no fields are modified, the command will be rejected.
 * Existing values will be updated to the input values.
 * Refer to [Field Constraints Summary](#field-constraints-summary) for a summary of the field constraints.
+* After a successful edit, the app will return to the full contact list.
 
 <div markdown="span" class="alert alert-info">
 
@@ -239,7 +240,7 @@ After running `view`, the app enters **View Mode**, displaying the full details 
 While in View Mode:
 * The displayed contact is always shown at **index 1** in the list.
 * Any command that takes an index (e.g. `edit`, `delete`, `note`) must use **index 1** to operate on the displayed contact.
-* Commands that will exit View Mode: `add`, `delete`, `list`, `find`, `remind`, `clear`
+* Commands that will exit View Mode: `add`, `delete`, `list`, `find`, `remind`, `clear`, `exit`.
 * Run `list` to exit View Mode and return to the full contact list.
 
 <div markdown="span" class="alert alert-primary">
