@@ -49,7 +49,8 @@ public class CircleFilterCommand extends Command {
             return new CommandResult(String.format(MESSAGE_NO_CONTACTS_FOUND, circleName));
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, circleName));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, circleName), false , false,
+                false, true);
     }
 
     @Override
