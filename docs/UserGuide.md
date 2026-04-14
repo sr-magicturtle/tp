@@ -49,16 +49,19 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
 1. Ensure you have Java `17` or above installed on your computer.
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W12-4/tp/releases).
+2. To check for the Java version installed on your computer, open a command terminal and enter `java --version` . Example output for Java 17 :
+![JavaVersion](images/JavaVersion.png)
 
-3. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your address book.
+3. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W12-4/tp/releases).
 
-4. Open a command terminal, `cd` into the folder you put the `.jar` file in,
-   and run `java -jar fam.jar` to run the application.
+4. Copy the `.jar` file to a folder you would like to use as the _home folder_ to store your address book.
+
+5. Open a command terminal, `cd` into the folder you put the `.jar` file in,
+   and run `java -jar FAM.jar` to run the application.
    A GUI similar to the one below should appear in a few seconds. Note that the app contains some sample data.
-   ![Ui(updated)](images/Ui(updated).png)
+   ![Ui(Updated)](images/Ui(Updated).png)
 
-5. Type a command in the command box and press Enter to execute it.
+6. Type a command in the command box and press Enter to execute it.
    Some example commands you can try:
 
     * `help` : Opens the help window.
@@ -69,7 +72,7 @@ A **Graphical User Interface (GUI)** is provided too, so that you can have the b
     * `clear` : Deletes all contacts. 
     * `exit` : Exits the app.
 
-6. Refer to [Features](#features) for details of each command.
+7. Refer to [Features](#features) for details of each command.
 
 <div markdown="span" class="alert alert-primary">
 
@@ -168,7 +171,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/FOLLOWUPDATE] [c/CIRCLE]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [d/FOLLOWUPDATE] [c/CIRCLE]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. 
 * The index **must be a positive integer** `1, 2, 3, …`
@@ -402,7 +405,8 @@ Format: `circlefilter CIRCLE`
 * All contacts with the specified circle will be shown in their index order in the address book.
 * There are only 3 types of circles: `client`, `prospect`, and `friend`. The circle must be one of these 3 types. 
 Any other value given to `circlefilter` will be rejected.
-* Note: Circles can only be filtered via the `circlefilter` command.
+
+:information_source: **Note:* Circles can only be filtered via the `circlefilter` command.
 
 <div markdown="span" class="alert alert-primary">
 
@@ -426,9 +430,10 @@ Format: `followup INDEX d/DATE`
 * `DATE` must be in the format `YYYY-MM-DD` (e.g. `2026-04-01`).
 * Past dates are allowed, but the app will show a warning after the date is set.
 * Dates more than 5 years from today are allowed, but the app will show a warning after the date is set.
-* Dates in the next 3 days will be <u>**underlined and bolded**</u> to as a visual reminder. 
+* Dates in the next 3 days will be **<u>underlined and bolded</u>** to as a visual reminder. 
 If a date has passed, its formatting will be updated when the app is restarted. 
-* Note: A follow-up date can only be added via the `followup` and `edit` commands, but not the `add` command.
+
+:information_source: **Note:** A follow-up date can only be added via the `followup` and `edit` commands, but not the `add` command.
 
 Examples:
 * `followup 1 d/2026-04-01` sets the follow-up date of contact 1 to `2026-04-01`.
@@ -444,7 +449,8 @@ Format: `followupclear INDEX`
 
 * Clears the follow-up date of the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** `1, 2, 3, …` and be within the valid range of the current displayed list of contacts.
 * In [view mode](#view-mode), the index of the displayed contact is always `1`.
-* Note: A follow-up date can only be removed via the `followupclear` command.
+
+:information_source: **Note:** A follow-up date can only be removed via the `followupclear` command.
 
 Examples:
 * `followupclear 1` clears the follow-up date of the 1st contact in the list.
@@ -574,7 +580,7 @@ Action | Format, Examples
 **Add** |`add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX` <br> e.g. `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [d/FOLLOWUPDATE] [c/CIRCLE]` <br> e.g. `edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]` <br> e.g. `find James Jake`
 **List** | `list`
 **Help** | `help`
