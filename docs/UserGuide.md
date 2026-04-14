@@ -88,13 +88,6 @@ like optional fields and command parameters that will make using the app much ea
 
 </div>
 
-<div markdown="span" class="alert alert-primary">
-
-**Tip #3:** FAM identifies commands exactly by their spelling, any typo in the command word will lead `Uknown command` error.
-Only command words with the right sequence of characters will be accepted given "Did you mean" command suggestion. For example, `aDd` and `a dd` will result in command suggestions but `addd` won't.
-
-</div>
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Features
@@ -102,6 +95,12 @@ Only command words with the right sequence of characters will be accepted given 
 <div markdown="block" class="alert alert-info">
 
 **Notes about the command format**
+
+* FAM commands must be typed exactly as shown. Any mistake in a command word will result in an `Unknown command` error. However, FAM will suggest the correct command if your input starts with the correct command word, regardless of capitalisation or spaces. For example, `aDd` or `a dd` or `addd` will trigger a `Did you mean: add?` suggestion.
+
+* Leading spaces before the command word are ignored, so `  add` will be treated the same as `add`.
+
+* Command words are case-sensitive.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.
   e.g. in `add n/NAME`, `NAME` is a parameter, e.g. `add n/John Doe`.
