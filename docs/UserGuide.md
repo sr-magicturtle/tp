@@ -367,7 +367,12 @@ Format: `circleadd INDEX c/CIRCLE`
 * In [view mode](#view-mode), the index of the displayed contact is always `1`.
 * Only 1 circle can be added at a time to 1 contact.
 * If the contact already has a circle, the addition of the circle will not be allowed.
-* **Note:** A circle can only be added via the `circleadd` and `edit` commands, but not the `add` command.
+
+<div markdown="span" class="alert alert-info">
+
+:information_source: **Note:** A circle can only be added via the `circleadd` and `edit` commands, but not the `add` command.
+
+</div>
 
 Examples:
 * `circleadd 1 c/client` adds the circle `client` to the 1st contact in the address book.
@@ -405,8 +410,6 @@ Format: `circlefilter CIRCLE`
 
 * All contacts with the specified circle will be shown in their index order in the address book.
 * There are only 3 types of circles: `client`, `prospect`, and `friend`. The circle is case-insensitive, but must be one of these 3 values. Any other value given to `circlefilter` will be rejected.
-* **Note:** Circles can only be filtered via the `circlefilter` command.
-:information_source: **Note:* Circles can only be filtered via the `circlefilter` command.
 
 <div markdown="span" class="alert alert-primary">
 
@@ -430,9 +433,14 @@ Format: `followup INDEX d/DATE`
 * `DATE` must be in the format `YYYY-MM-DD` (e.g. `2026-04-01`).
 * Past dates are allowed, but the app will show a warning after the date is set.
 * Dates more than 5 years from today are allowed, but the app will show a warning after the date is set.
-* Dates in the next 3 days will be <u>**underlined and bolded**</u> to as a visual reminder.
+* Dates in the next 3 days will be **<u>underlined and bolded</u>** to as a visual reminder.
   If a date has passed, its formatting will be updated when the app is restarted.
-* **Note:** A follow-up date can only be added via the `followup` and `edit` commands, but not the `add` command.
+
+<div markdown="span" class="alert alert-info">
+
+:information_source: **Note:** A follow-up date can only be added via the `followup` and `edit` commands, but not the `add` command.
+
+</div>
 
 Examples:
 * `followup 1 d/2026-04-01` sets the follow-up date of contact 1 to `2026-04-01`.
@@ -449,7 +457,11 @@ Format: `followupclear INDEX`
 * Clears the follow-up date of the contact at the specified `INDEX`. The index refers to the index number shown in the displayed contact list. The index **must be a positive integer** `1, 2, 3, …` and be within the valid range of the current displayed list of contacts.
 * In [view mode](#view-mode), the index of the displayed contact is always `1`.
 
+<div markdown="span" class="alert alert-info">
+
 :information_source: **Note:** A follow-up date can only be removed via the `followupclear` command.
+
+</div>
 
 Examples:
 * `followupclear 1` clears the follow-up date of the 1st contact in the list.
