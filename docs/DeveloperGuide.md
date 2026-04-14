@@ -189,7 +189,7 @@ should end at the destroy marker (X) but due to a limitation of PlantUML, the li
 </div>
 
 After `ViewCommand` executes, the app enters **View Mode**. `MainWindow` sets `isInViewMode = true` and 
-calls `handleViewPerson()` to display the contact's full details. While in View Mode, the contact is always shown at index 1. Running `add`, `list`, `delete`, `clear`, `find`, or `remind` exits View Mode and clears the detail panel. All other commands (e.g. `edit`, `note`, `followup`) keep the app in View Mode and refresh the detail panel with the latest contact details.
+calls `handleViewPerson()` to display the contact's full details. While in View Mode, the contact is always shown at index 1. Running `add`, `list`, `delete`, `clear`, `find`,`remind` or `edit` exits View Mode and clears the detail panel. All other commands (e.g.`note`, `followup`) keep the app in View Mode and refresh the detail panel with the latest contact details.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -910,6 +910,13 @@ testers are expected to do more *exploratory* testing.
 
 **Expected:**
 * Command fails and tag is not removed.
+
+### Negative test case: multiple tag values in one command
+**Steps:**
+1. Run `tagrm 1 t/friend t/colleague`
+
+**Expected:**
+* Command fails (only 1 tag can be removed at a time).
 
 ---
 
